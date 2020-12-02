@@ -1,0 +1,35 @@
+server:
+  port: 10000
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://47.103.221.135:3306/mall_pms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    hikari:
+      max-lifetime: 500000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.103.221.135:8848
+    alicloud:
+      access-key: LTAI4G51DA6sWEJQ1LXWmrhL
+      secret-key: IgAenHT03454WDc87JOa4RVLteZSYl
+      oss:
+        endpoint: http://oss-cn-beijing.aliyuncs.com
+#  application:
+#    name: mall-product
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+logging:
+  level:
+    com.yimuziy.mall: debug
+

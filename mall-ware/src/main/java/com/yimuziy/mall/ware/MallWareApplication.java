@@ -1,4 +1,4 @@
-package com.yimuziy.mall.lware;
+package com.yimuziy.mall.ware;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

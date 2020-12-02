@@ -39,7 +39,7 @@ public class CategoryController {
     public R list(){
         List<CategoryEntity> entites = categoryService.listWithTree();
 
-        return R.ok().put("page", entites);
+        return R.ok().put("data", entites);
     }
 
 
@@ -79,7 +79,7 @@ public class CategoryController {
     @RequestMapping("/update")
     //@RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
+		categoryService.updateCascade(category);
 
         return R.ok();
     }
