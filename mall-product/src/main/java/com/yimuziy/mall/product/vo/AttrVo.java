@@ -1,7 +1,8 @@
-package com.yimuziy.mall.product;
+package com.yimuziy.mall.product.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @date 2020/12/2 18:34
  * @description
  */
+@Data
 public class AttrVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +33,10 @@ public class AttrVo implements Serializable {
      * 属性图标
      */
     private String icon;
+    /**
+     * 值类型[0-单属性，1-多属性性]
+     */
+    private Integer valueType;
     /**
      * 可选值列表[用逗号分隔]
      */

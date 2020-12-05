@@ -19,6 +19,8 @@ spring:
       secret-key: IgAenHT03454WDc87JOa4RVLteZSYl
       oss:
         endpoint: http://oss-cn-beijing.aliyuncs.com
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 #  application:
 #    name: mall-product
 
@@ -33,3 +35,7 @@ logging:
   level:
     com.yimuziy.mall: debug
 
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000

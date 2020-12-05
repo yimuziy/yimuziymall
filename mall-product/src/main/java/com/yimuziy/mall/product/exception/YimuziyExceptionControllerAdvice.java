@@ -40,6 +40,7 @@ public class YimuziyExceptionControllerAdvice {
     @ExceptionHandler(value = Throwable.class)
     public R handleException(Throwable throwable ){
         log.error("系统出现异常异常类型: {}",throwable.getMessage(),throwable.getClass());
+        throwable.printStackTrace();
 
         return R.error(BizCodeEnum.UNKNOW_EXCEPTION.getCode(),BizCodeEnum.UNKNOW_EXCEPTION.getMsg());
     }
