@@ -1,5 +1,5 @@
 server:
-  port: 10000
+  port: 10010
 
 spring:
   datasource:
@@ -14,6 +14,7 @@ spring:
     nacos:
       discovery:
         server-addr: 47.103.221.135:8848
+
     alicloud:
       access-key: LTAI4G51DA6sWEJQ1LXWmrhL
       secret-key: IgAenHT03454WDc87JOa4RVLteZSYl
@@ -21,6 +22,12 @@ spring:
         endpoint: http://oss-cn-beijing.aliyuncs.com
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+  redis:
+    host: 47.103.221.135
+    port: 6379
+
 #  application:
 #    name: mall-product
 
@@ -39,3 +46,4 @@ logging:
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000
+
