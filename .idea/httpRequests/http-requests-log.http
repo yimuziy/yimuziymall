@@ -1,0 +1,10 @@
+GET http://localhost:10000/product/attrattrgrouprelation/save
+
+<> 2020-12-02T154348.200.json
+
+###
+
+GET http://product/brand/list
+
+###
+
