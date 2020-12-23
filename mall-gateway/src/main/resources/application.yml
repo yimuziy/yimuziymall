@@ -43,7 +43,12 @@ spring:
         - id: yimuziy_host_route
           uri: lb://mall-product
           predicates:
-            - Host=**.yimuziymall.com
+            - Host=yimuziymall.com,item.yimuziymall.com
+
+        - id: yimuziy_host_route
+          uri: lb://mall-search
+          predicates:
+            - Host=search.yimuziymall.com
 
 
 

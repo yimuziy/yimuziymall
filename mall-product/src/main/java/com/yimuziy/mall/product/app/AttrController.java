@@ -10,6 +10,7 @@ import com.yimuziy.mall.product.service.ProductAttrValueService;
 import com.yimuziy.mall.product.vo.AttrRespVo;
 import com.yimuziy.mall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import com.yimuziy.mall.product.service.AttrService;
@@ -69,8 +70,9 @@ public class AttrController {
 
 
     /**
-     * 信息
+     * 根据attrId查询属性并返回
      */
+    @Cacheable(value="attr",key = "'attrinfo:'+#root.args[0]")
     @RequestMapping("/info/{attrId}")
     //@RequiresPermissions("product:attr:info")
     public R info(@PathVariable("attrId") Long attrId){
