@@ -23,6 +23,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="jifosj" target="1.8" />
+      <module name="mall" target="1.8" />
       <module name="mall-auth-server" target="1.8" />
       <module name="mall-common" target="1.8" />
       <module name="mall-coupon" target="1.8" />
