@@ -26,4 +26,13 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescDao, SpuInfoD
         return new PageUtils(page);
     }
 
+    /**
+     * 保存商品描述
+     * @param descEntity
+     */
+    @Override
+    public void saveSpuInfoDesc(SpuInfoDescEntity descEntity) {
+        this.baseMapper.insert(descEntity);
+    }
+
 }

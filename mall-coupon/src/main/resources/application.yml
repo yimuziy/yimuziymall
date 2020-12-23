@@ -1,0 +1,22 @@
+#server:
+#  port: 7000
+#
+#spring:
+#  application:
+#    name: mall-coupon
+#  datasource:
+#    username: root
+#    password: root
+#    url: jdbc:mysql://47.103.221.135:3306/mall_sms
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 47.103.221.135:8848
+#
+#mybatis-plus:
+#  mapper-locations: classpath:/mapper/**/*.xml
+#  global-config:
+#    db-config:
+#      id-type: auto
+
