@@ -4,6 +4,7 @@ import com.yimuziy.common.exception.BizCodeEnum;
 import com.yimuziy.common.to.es.SkuEsModel;
 import com.yimuziy.common.utils.R;
 import com.yimuziy.mall.search.service.ProductSaveService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

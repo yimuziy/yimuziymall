@@ -50,6 +50,11 @@ spring:
           predicates:
             - Host=search.yimuziymall.com
 
+        - id: yimuziy_host_route
+          uri: lb://mall-auth-server
+          predicates:
+            - Host=auth.yimuziymall.com
+
 
 
 

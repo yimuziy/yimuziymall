@@ -4,13 +4,15 @@ import java.util.Arrays;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.yimuziy.common.exception.BizCodeEnum;
+import com.yimuziy.mall.member.exception.PhoneExistException;
+import com.yimuziy.mall.member.exception.UsernameExistException;
 import com.yimuziy.mall.member.feign.CouponFeighService;
+import com.yimuziy.mall.member.vo.MemberLoginVo;
+import com.yimuziy.mall.member.vo.MemberRegistVo;
+import com.yimuziy.mall.member.vo.SocialUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.yimuziy.mall.member.entity.MemberEntity;
 import com.yimuziy.mall.member.service.MemberService;
@@ -34,6 +36,54 @@ public class MemberController {
 
     @Autowired
     CouponFeighService couponFeighService;
+
+
+    @PostMapping("/oauth2/login")
+    public R oauthlogin(@RequestBody SocialUser socialUser ) throws Exception {
+
+        MemberEntity entity = memberService.login(socialUser);
+        if(entity!=null){
+            //TODO 1、登陆成功处理
+            return  R.ok().setData(entity);
+        }else {
+            return R.error(BizCodeEnum.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getCode(),
+                    BizCodeEnum.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getMsg());
+        }
+
+    }
+
+
+    @PostMapping("/login")
+    public R login(@RequestBody MemberLoginVo vo ){
+
+        MemberEntity entity = memberService.login(vo);
+        if(entity!=null){
+            //TODO 1、登陆成功处理
+            return  R.ok();
+        }else {
+            return R.error(BizCodeEnum.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getCode(),
+                    BizCodeEnum.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getMsg());
+        }
+
+    }
+
+
+    /**
+     * 注册功能
+     * @return
+     */
+    @PostMapping("/regist")
+    public R regist(@RequestBody MemberRegistVo vo){
+
+        try{
+            memberService.regist(vo);
+        }catch (PhoneExistException e){
+           return R.error(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(), BizCodeEnum.PHONE_EXIST_EXCEPTION.getMsg());
+        }catch (UsernameExistException e){
+            return R.error(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(), BizCodeEnum.USER_EXIST_EXCEPTION.getMsg());
+        }
+        return R.ok();
+    }
 
 
     @RequestMapping("/coupons")

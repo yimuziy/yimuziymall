@@ -2,9 +2,13 @@ package com.yimuziy.mall.product;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yimuziy.mall.product.dao.AttrGroupDao;
+import com.yimuziy.mall.product.dao.SkuSaleAttrValueDao;
 import com.yimuziy.mall.product.entity.BrandEntity;
 import com.yimuziy.mall.product.service.BrandService;
 import com.yimuziy.mall.product.service.CategoryService;
+import com.yimuziy.mall.product.vo.SkuItemSaleAttrVo;
+import com.yimuziy.mall.product.vo.SpuItemAttrGroupVo;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
@@ -39,6 +43,26 @@ class MallProductApplicationTests {
 
     @Autowired
     RedissonClient redissonClient;
+
+    @Autowired
+    AttrGroupDao attrGroupDao;
+
+    @Autowired
+    SkuSaleAttrValueDao skuSaleAttrValueDao;
+
+    @Test
+    public void test02(){
+        List<SkuItemSaleAttrVo> saleAttrsBySpuId = skuSaleAttrValueDao.getSaleAttrsBySpuId(22L);
+        saleAttrsBySpuId.forEach(System.out::println);
+    }
+
+    @Test
+    public void test(){
+        List<SpuItemAttrGroupVo> spuItemAttrGroupVos = attrGroupDao.etattrGroupWithAttrsBySpuId(22L, 225L);
+        for (SpuItemAttrGroupVo spuItemAttrGroupVo : spuItemAttrGroupVos) {
+            System.out.println(spuItemAttrGroupVo);
+        }
+    }
 
     @Test
     public void redisson(){

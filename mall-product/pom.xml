@@ -65,6 +65,11 @@
             </exclusions>-->
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
         <!-- 如果出现OutOfDirectMemoryError 放弃使用lettuce使用jedis连接redis -->
        <!-- <dependency>
             <groupId>redis.clients</groupId>
@@ -83,6 +88,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
 
