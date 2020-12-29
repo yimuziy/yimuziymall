@@ -20,6 +20,7 @@ public interface SkuImagesService extends IService<SkuImagesEntity> {
 
     /**
      * 根据skuid获取对应的图片信息
+     *
      * @param skuId
      * @return
      */

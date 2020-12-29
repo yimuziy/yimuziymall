@@ -51,13 +51,13 @@ class MallProductApplicationTests {
     SkuSaleAttrValueDao skuSaleAttrValueDao;
 
     @Test
-    public void test02(){
+    public void test02() {
         List<SkuItemSaleAttrVo> saleAttrsBySpuId = skuSaleAttrValueDao.getSaleAttrsBySpuId(22L);
         saleAttrsBySpuId.forEach(System.out::println);
     }
 
     @Test
-    public void test(){
+    public void test() {
         List<SpuItemAttrGroupVo> spuItemAttrGroupVos = attrGroupDao.etattrGroupWithAttrsBySpuId(22L, 225L);
         for (SpuItemAttrGroupVo spuItemAttrGroupVo : spuItemAttrGroupVos) {
             System.out.println(spuItemAttrGroupVo);
@@ -65,27 +65,27 @@ class MallProductApplicationTests {
     }
 
     @Test
-    public void redisson(){
+    public void redisson() {
         System.out.println(redissonClient);
     }
 
 
     @Test
-    public void testStringRedisTemplate(){
+    public void testStringRedisTemplate() {
         //hello world
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
 
         //保存
-        ops.set("hello","world_"+ UUID.randomUUID().toString());
+        ops.set("hello", "world_" + UUID.randomUUID().toString());
 
         //查询
         String hello = ops.get("hello");
-        System.out.println("之前保存的数据是: "+ hello);
+        System.out.println("之前保存的数据是: " + hello);
     }
 
 
     @Test
-    public void testFindPath(){
+    public void testFindPath() {
         Long[] catelogPath = categoryService.findCatelogPath(165L);
         log.info("完整路径:{}", Arrays.asList(catelogPath));
     }
@@ -128,7 +128,7 @@ class MallProductApplicationTests {
 //        brandService.updateById(brandEntity);
 
         List<BrandEntity> list = brandService.list(new QueryWrapper<BrandEntity>().eq("brand_id", 1));
-        list.forEach((item)->{
+        list.forEach((item) -> {
             System.out.println(item);
         });
     }

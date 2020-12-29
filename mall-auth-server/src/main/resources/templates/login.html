@@ -58,8 +58,9 @@
                 请输入账户名和密码
             </div>
             <form action="/login" method="post">
-                <div  >
-                   &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: red" th:text="${errors!=null?(#maps.containsKey(errors,'msg')?errors.msg:''):''}"></span>
+                <div>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: red"
+                                                             th:text="${errors!=null?(#maps.containsKey(errors,'msg')?errors.msg:''):''}"></span>
                 </div>
                 <ul>
                     <li class="top_1">
@@ -88,13 +89,13 @@
                     </a>
                 </li>
                 <li class="f4"> |</li>
-               <!-- <li>
-                    <a href="/static/login/">
-                        <img src="/static/login/JD_img/weixin.png"/>
-                        <span>微信</span>
-                    </a>
-                </li>-->
-<!--                <li class="f4"> |</li>-->
+                <!-- <li>
+                     <a href="/static/login/">
+                         <img src="/static/login/JD_img/weixin.png"/>
+                         <span>微信</span>
+                     </a>
+                 </li>-->
+                <!--                <li class="f4"> |</li>-->
                 <li>
                     <a href="https://api.weibo.com/oauth2/authorize?client_id=1840293055&response_type=code&redirect_uri=http://auth.yimuziymall.com/oauth2.0/weibo/success">
                         <img style="width: 50px;height: 18px" src="/static/login/JD_img/weibo.png"/>

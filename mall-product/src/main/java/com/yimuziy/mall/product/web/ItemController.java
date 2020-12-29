@@ -23,15 +23,16 @@ public class ItemController {
 
     /**
      * 展示当前sku的详情
+     *
      * @param skuId
      * @return
      */
     @GetMapping("/{skuId}.html")
     public String skuItem(@PathVariable Long skuId, Model model) throws ExecutionException, InterruptedException {
 
-        System.out.println("准备查询"+ skuId+"详情");
+        System.out.println("准备查询" + skuId + "详情");
         SkuItemVo vo = skuInfoService.item(skuId);
-        model.addAttribute("item",vo);
+        model.addAttribute("item", vo);
 
         return "item";
     }

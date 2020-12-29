@@ -62,6 +62,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         entity.setMobile(vo.getPhone());
         entity.setUsername(vo.getUserName());
 
+        //设置nicknaeme
+        entity.setNickname(vo.getUserName());
+
         //密码要进行加密存储. 加盐： $1$+8位字符
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encode = passwordEncoder.encode(vo.getPassword());
@@ -140,7 +143,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
 
             memberEntity.setAccessToken(socialUser.getAccess_token());
             memberEntity.setExpiresIn(socialUser.getExpires_in());
-            return  memberEntity;
+            return memberEntity;
         } else {
             //2、没有查到当前社交用户对应的记录我们就需要注册一个
             MemberEntity regist = new MemberEntity();
@@ -173,7 +176,6 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
             memberDao.insert(regist);
             return regist;
         }
-
 
 
     }

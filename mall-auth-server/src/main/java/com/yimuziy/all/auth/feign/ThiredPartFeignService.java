@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ThiredPartFeignService {
 
     @PostMapping("/sms/sendCode")
-    public R sendCode(@RequestParam("phone") String phone, @RequestParam("code") String code );
+    public R sendCode(@RequestParam("phone") String phone, @RequestParam("code") String code);
 
     @PostMapping("/sendsms")
-    public R sendSms(@RequestParam("phone") String phone,@RequestParam("code") String code);
+    public R sendSms(@RequestParam("phone") String phone, @RequestParam("code") String code);
 }

@@ -21,6 +21,7 @@ public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValueEntity
 
     /**
      * 获取所有spu对应的sku
+     *
      * @param spuId
      * @return
      */

@@ -145,11 +145,11 @@ public class ThreadTest {
         CompletableFuture<String> futureImg = CompletableFuture.supplyAsync(() -> {
             System.out.println("查询商品的图片信息:");
             return "hello.jpg";
-        },executor);
+        }, executor);
         CompletableFuture<String> futureAttr = CompletableFuture.supplyAsync(() -> {
             System.out.println("查询商品的属性:");
             return "黑色+256G";
-        },executor);
+        }, executor);
         CompletableFuture<String> futureDesc = CompletableFuture.supplyAsync(() -> {
             try {
                 Thread.sleep(3000);
@@ -158,14 +158,14 @@ public class ThreadTest {
                 e.printStackTrace();
             }
             return "华为";
-        },executor);
+        }, executor);
 
 //        CompletableFuture<Void> allOf = CompletableFuture.allOf(futureImg, futureAttr, futureDesc);
         CompletableFuture<Object> anyOf = CompletableFuture.anyOf(futureImg, futureAttr, futureDesc);
         anyOf.get(); //等待所有结果完成
 
 
-        System.out.println("main...end ...."+ anyOf.get());
+        System.out.println("main...end ...." + anyOf.get());
 
     }
 

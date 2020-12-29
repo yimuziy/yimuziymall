@@ -268,10 +268,10 @@ public class MallSearchServiceImpl implements MallSearchService {
         String replace = "";
         if (param.get_queryString().indexOf("&" + key + "=" + encode) != -1) {
             replace = param.get_queryString().replace("&" + key + "=" + encode, "");
-        } else if (param.get_queryString().indexOf(key + "=" + encode+"&") != -1) {
-            replace = param.get_queryString().replace(key + "=" + encode +"&", "");
-        }else if (param.get_queryString().indexOf(key + "=" + encode) != -1) {
-            replace = param.get_queryString().replace(key + "=" + encode , "");
+        } else if (param.get_queryString().indexOf(key + "=" + encode + "&") != -1) {
+            replace = param.get_queryString().replace(key + "=" + encode + "&", "");
+        } else if (param.get_queryString().indexOf(key + "=" + encode) != -1) {
+            replace = param.get_queryString().replace(key + "=" + encode, "");
         }
         return replace;
     }

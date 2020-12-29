@@ -1,7 +1,8 @@
 /**
-  * Copyright 2020 bejson.com 
-  */
+ * Copyright 2020 bejson.com
+ */
 package com.yimuziy.mall.product.vo;
+
 import lombok.Data;
 
 import java.math.BigDecimal;

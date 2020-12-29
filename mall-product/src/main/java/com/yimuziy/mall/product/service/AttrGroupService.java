@@ -25,6 +25,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     /**
      * 获取分类下所有分组&关联属性
+     *
      * @param catelogId
      * @return
      */

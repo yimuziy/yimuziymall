@@ -23,11 +23,12 @@ public class SearchController {
 
     /**
      * 自动将页面提交过来的所有请求查询参数封装成指定的对象中
+     *
      * @param param
      * @return
      */
     @GetMapping("/list.html")
-    public String listPage(SearchParam param, Model model, HttpServletRequest request){
+    public String listPage(SearchParam param, Model model, HttpServletRequest request) {
 
         param.set_queryString(request.getQueryString());
         //1、根据传递来的页面的查询参数，去es中检索商品

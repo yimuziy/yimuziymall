@@ -24,6 +24,7 @@ public interface MemberService extends IService<MemberEntity> {
 
     /**
      * 注册用户
+     *
      * @param vo
      */
     void regist(MemberRegistVo vo);
@@ -34,6 +35,7 @@ public interface MemberService extends IService<MemberEntity> {
 
     /**
      * 用户登录
+     *
      * @param vo
      * @return
      */
@@ -41,6 +43,7 @@ public interface MemberService extends IService<MemberEntity> {
 
     /**
      * 社交用户登陆
+     *
      * @param socialUser
      * @return
      */

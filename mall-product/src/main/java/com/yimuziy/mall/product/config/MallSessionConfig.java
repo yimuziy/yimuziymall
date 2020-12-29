@@ -16,7 +16,7 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 public class MallSessionConfig {
 
     @Bean
-    public CookieSerializer cookieSerializer(){
+    public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
 
         cookieSerializer.setDomainName("yimuziymall.com");
@@ -26,7 +26,7 @@ public class MallSessionConfig {
     }
 
     @Bean
-    public RedisSerializer<Object> springSessionDefaultRedisSerializer(){
+    public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
         return new GenericJackson2JsonRedisSerializer();
     }
 }

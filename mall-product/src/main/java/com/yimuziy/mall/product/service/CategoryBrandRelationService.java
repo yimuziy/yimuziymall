@@ -21,12 +21,14 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
 
     /**
      * 保存详细信息
+     *
      * @param categoryBrandRelation
      */
     void saveDetail(CategoryBrandRelationEntity categoryBrandRelation);
 
     /**
      * 关联更新品牌
+     *
      * @param brandId
      * @param name
      */
@@ -34,6 +36,7 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
 
     /**
      * 级联更新category
+     *
      * @param catId
      * @param name
      */
@@ -41,6 +44,7 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
 
     /**
      * 查询执行分类的品牌信息
+     *
      * @param catId
      * @return
      */

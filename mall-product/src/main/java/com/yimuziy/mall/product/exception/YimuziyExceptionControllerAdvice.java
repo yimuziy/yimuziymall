@@ -19,30 +19,30 @@ import java.util.List;
  */
 @Slf4j
 
-@RestControllerAdvice(basePackages = "com.yimuziy.mall.product.controller" )
+@RestControllerAdvice(basePackages = "com.yimuziy.mall.product.controller")
 public class YimuziyExceptionControllerAdvice {
 
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public R handleVaildException(MethodArgumentNotValidException e ){
-        log.error("数据校验出现问题{},异常类型: {}",e.getMessage(),e.getClass());
+    public R handleVaildException(MethodArgumentNotValidException e) {
+        log.error("数据校验出现问题{},异常类型: {}", e.getMessage(), e.getClass());
         BindingResult bindingResult = e.getBindingResult();
 
         HashMap<String, String> errorMap = new HashMap<>();
-        bindingResult.getFieldErrors().forEach((fieldError)->{
-            errorMap.put(fieldError.getField(),fieldError.getDefaultMessage());
+        bindingResult.getFieldErrors().forEach((fieldError) -> {
+            errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
         });
 
 
-        return R.error(BizCodeEnum.VAILD_EXCEPTION.getCode(),BizCodeEnum.VAILD_EXCEPTION.getMsg()).put("data",errorMap);
+        return R.error(BizCodeEnum.VAILD_EXCEPTION.getCode(), BizCodeEnum.VAILD_EXCEPTION.getMsg()).put("data", errorMap);
     }
 
     @ExceptionHandler(value = Throwable.class)
-    public R handleException(Throwable throwable ){
-        log.error("系统出现异常异常类型: {}",throwable.getMessage(),throwable.getClass());
+    public R handleException(Throwable throwable) {
+        log.error("系统出现异常异常类型: {}", throwable.getMessage(), throwable.getClass());
         throwable.printStackTrace();
 
-        return R.error(BizCodeEnum.UNKNOW_EXCEPTION.getCode(),BizCodeEnum.UNKNOW_EXCEPTION.getMsg());
+        return R.error(BizCodeEnum.UNKNOW_EXCEPTION.getCode(), BizCodeEnum.UNKNOW_EXCEPTION.getMsg());
     }
 
 }

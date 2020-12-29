@@ -45,7 +45,7 @@ public class SmsComponent {
     private String sms_singName;
     private String sms_templateCode;
 
-    public void sendSms(String phone,String code){
+    public void sendSms(String phone, String code) {
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessId, secret);
         IAcsClient client = new DefaultAcsClient(profile);
 
@@ -58,7 +58,7 @@ public class SmsComponent {
         request.putQueryParameter("PhoneNumbers", phone);
         request.putQueryParameter("SignName", sms_singName);
         request.putQueryParameter("TemplateCode", sms_templateCode);
-        request.putQueryParameter("TemplateParam", "{\"code\":\""+code+"\"}");
+        request.putQueryParameter("TemplateParam", "{\"code\":\"" + code + "\"}");
         try {
             CommonResponse response = client.getCommonResponse(request);
             System.out.println(response.getData());
@@ -72,7 +72,7 @@ public class SmsComponent {
     /**
      * 发送验证码
      */
-    public void sendCode(String phone,String code){
+    public void sendCode(String phone, String code) {
         String method = "POST";
         Map<String, String> headers = new HashMap<String, String>();
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105

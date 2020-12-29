@@ -1,7 +1,8 @@
 /**
-  * Copyright 2020 bejson.com 
-  */
+ * Copyright 2020 bejson.com
+ */
 package com.yimuziy.mall.product.vo;
+
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -29,7 +30,7 @@ public class Skus {
     private BigDecimal fullPrice;
     private BigDecimal reducePrice;
     private int priceStatus;
-//    private List<String> memberPrice;
+    //    private List<String> memberPrice;
     private List<MemberPrice> memberPrice;
 
 }

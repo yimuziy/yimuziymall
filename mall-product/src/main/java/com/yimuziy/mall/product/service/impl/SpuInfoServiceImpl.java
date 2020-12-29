@@ -83,6 +83,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     /**
      * //TODO 高级部分完善
+     *
      * @param vo
      */
     @Transactional()
@@ -225,9 +226,9 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         QueryWrapper<SpuInfoEntity> wrapper = new QueryWrapper<>();
 
         String key = (String) params.get("key");
-        if(!StringUtils.isEmpty(key)){
+        if (!StringUtils.isEmpty(key)) {
             wrapper.and(w -> {
-                w.eq("id",key).or().like("spu_name",key);
+                w.eq("id", key).or().like("spu_name", key);
             });
         }
 
@@ -238,21 +239,19 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
          * catelogId: 225
          */
         String status = (String) params.get("status");
-        if(!StringUtils.isEmpty(status)){
-            wrapper.eq("publish_status",status);
+        if (!StringUtils.isEmpty(status)) {
+            wrapper.eq("publish_status", status);
         }
 
         String brandId = (String) params.get("brandId");
-        if(!StringUtils.isEmpty(brandId) && !"0".equals(brandId)){
-            wrapper.eq("brand_id",brandId);
+        if (!StringUtils.isEmpty(brandId) && !"0".equals(brandId)) {
+            wrapper.eq("brand_id", brandId);
         }
 
         String catelogId = (String) params.get("catelogId");
-        if(!StringUtils.isEmpty(catelogId) &&  !"0".equals(catelogId)){
-            wrapper.eq("catalog_id",catelogId);
+        if (!StringUtils.isEmpty(catelogId) && !"0".equals(catelogId)) {
+            wrapper.eq("catalog_id", catelogId);
         }
-
-
 
 
         IPage<SpuInfoEntity> page = this.page(
@@ -263,12 +262,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         return new PageUtils(page);
 
 
-
-
     }
 
     /**
      * 商品上架
+     *
      * @param spuId
      */
     @Override
@@ -292,25 +290,24 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             return idSet.contains(item.getAttrId());
         }).map(item -> {
             SkuEsModel.Attrs attrs1 = new SkuEsModel.Attrs();
-            BeanUtils.copyProperties(item,attrs1);
+            BeanUtils.copyProperties(item, attrs1);
             return attrs1;
         }).collect(Collectors.toList());
 
 
-
         //TODO 1、发送远程调用，库存系统查询是否有库存
         Map<Long, Boolean> stockMap = null;
-        try{
+        try {
 
-                R r = wareFeignService.getSkuHasStock(skuIdList);
-                //
-                TypeReference<List<SkuHasStockVo>> typeReference = new TypeReference<List<SkuHasStockVo>>() {
-                };
-                stockMap = r.getData(typeReference).stream().collect(
-                        Collectors.toMap(SkuHasStockVo::getSkuId, item -> item.getHasStock()));
+            R r = wareFeignService.getSkuHasStock(skuIdList);
+            //
+            TypeReference<List<SkuHasStockVo>> typeReference = new TypeReference<List<SkuHasStockVo>>() {
+            };
+            stockMap = r.getData(typeReference).stream().collect(
+                    Collectors.toMap(SkuHasStockVo::getSkuId, item -> item.getHasStock()));
 
-        }catch (Exception e){
-            log.error("库存服务查询异常: 原因{}",e);
+        } catch (Exception e) {
+            log.error("库存服务查询异常: 原因{}", e);
         }
 
 
@@ -319,16 +316,16 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         List<SkuEsModel> upProducts = skus.stream().map(sku -> {
             //组装需要的数据
             SkuEsModel esModel = new SkuEsModel();
-            BeanUtils.copyProperties(sku,esModel);
+            BeanUtils.copyProperties(sku, esModel);
 
             //skuPrice,skjuImg
             esModel.setSkuPrice(sku.getPrice());
             esModel.setSkuImg(sku.getSkuDefaultImg());
             //,hasStock,hotScore,
             //设置库存信息
-            if(finalStockMap == null){
+            if (finalStockMap == null) {
                 esModel.setHasStock(true);
-            }else {
+            } else {
                 esModel.setHasStock(finalStockMap.get(sku.getSkuId()));
             }
             //TODO 2、热度评分。0，
@@ -347,17 +344,16 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             esModel.setAttrs(attrsList);
 
 
-
             return esModel;
         }).collect(Collectors.toList());
 
         //TODO 5、将数据发送给es进行保存； mall-search;
         R r = searchFeignService.productStatusUp(upProducts);
-        if(r.getCode()==0){
+        if (r.getCode() == 0) {
             //远程调用成功
             //TODO 6、修改当前spu的状态
             this.baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_UP.getCode());
-        }else{
+        } else {
             //远程调用失败
             //TODO 7、重复调用？ 接口幂等性； 重试机制？ 》》》》
             //Feign调用流程
@@ -380,22 +376,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

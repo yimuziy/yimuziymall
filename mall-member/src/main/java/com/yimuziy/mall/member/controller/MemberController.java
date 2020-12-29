@@ -20,7 +20,6 @@ import com.yimuziy.common.utils.PageUtils;
 import com.yimuziy.common.utils.R;
 
 
-
 /**
  * 会员
  *
@@ -39,13 +38,13 @@ public class MemberController {
 
 
     @PostMapping("/oauth2/login")
-    public R oauthlogin(@RequestBody SocialUser socialUser ) throws Exception {
+    public R oauthlogin(@RequestBody SocialUser socialUser) throws Exception {
 
         MemberEntity entity = memberService.login(socialUser);
-        if(entity!=null){
+        if (entity != null) {
             //TODO 1、登陆成功处理
-            return  R.ok().setData(entity);
-        }else {
+            return R.ok().setData(entity);
+        } else {
             return R.error(BizCodeEnum.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getCode(),
                     BizCodeEnum.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getMsg());
         }
@@ -54,13 +53,13 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public R login(@RequestBody MemberLoginVo vo ){
+    public R login(@RequestBody MemberLoginVo vo) {
 
         MemberEntity entity = memberService.login(vo);
-        if(entity!=null){
-            //TODO 1、登陆成功处理
-            return  R.ok();
-        }else {
+        if (entity != null) {
+
+            return R.ok().setData(entity);
+        } else {
             return R.error(BizCodeEnum.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getCode(),
                     BizCodeEnum.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getMsg());
         }
@@ -70,16 +69,17 @@ public class MemberController {
 
     /**
      * 注册功能
+     *
      * @return
      */
     @PostMapping("/regist")
-    public R regist(@RequestBody MemberRegistVo vo){
+    public R regist(@RequestBody MemberRegistVo vo) {
 
-        try{
+        try {
             memberService.regist(vo);
-        }catch (PhoneExistException e){
-           return R.error(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(), BizCodeEnum.PHONE_EXIST_EXCEPTION.getMsg());
-        }catch (UsernameExistException e){
+        } catch (PhoneExistException e) {
+            return R.error(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(), BizCodeEnum.PHONE_EXIST_EXCEPTION.getMsg());
+        } catch (UsernameExistException e) {
             return R.error(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(), BizCodeEnum.USER_EXIST_EXCEPTION.getMsg());
         }
         return R.ok();
@@ -87,20 +87,21 @@ public class MemberController {
 
 
     @RequestMapping("/coupons")
-    public R test(){
+    public R test() {
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setNickname("张三");
 
         R membercoupons = couponFeighService.membercoupons();
-        return R.ok().put("member",memberEntity).put("coupons",membercoupons);
+        return R.ok().put("member", memberEntity).put("coupons", membercoupons);
 
     }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:member:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = memberService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -112,8 +113,8 @@ public class MemberController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:member:info")
-    public R info(@PathVariable("id") Long id){
-		MemberEntity member = memberService.getById(id);
+    public R info(@PathVariable("id") Long id) {
+        MemberEntity member = memberService.getById(id);
 
         return R.ok().put("member", member);
     }
@@ -122,9 +123,9 @@ public class MemberController {
      * 保存
      */
     @RequestMapping("/save")
-   // @RequiresPermissions("member:member:save")
-    public R save(@RequestBody MemberEntity member){
-		memberService.save(member);
+    // @RequiresPermissions("member:member:save")
+    public R save(@RequestBody MemberEntity member) {
+        memberService.save(member);
 
         return R.ok();
     }
@@ -134,8 +135,8 @@ public class MemberController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:member:update")
-    public R update(@RequestBody MemberEntity member){
-		memberService.updateById(member);
+    public R update(@RequestBody MemberEntity member) {
+        memberService.updateById(member);
 
         return R.ok();
     }
@@ -145,8 +146,8 @@ public class MemberController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:member:delete")
-    public R delete(@RequestBody Long[] ids){
-		memberService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long[] ids) {
+        memberService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

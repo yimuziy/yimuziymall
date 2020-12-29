@@ -75,53 +75,46 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         max: 0
          */
         String key = (String) params.get("key");
-        if(!StringUtils.isEmpty(key)){
+        if (!StringUtils.isEmpty(key)) {
             wrapper.and(wrap -> {
-                wrap.eq("sku_id",key).or().like("sku_name",key);
+                wrap.eq("sku_id", key).or().like("sku_name", key);
             });
         }
 
         String catelogId = (String) params.get("catelogId");
-        if(!StringUtils.isEmpty(catelogId) && !"0".equals(catelogId)){
-            wrapper.eq("catalog_id",catelogId);
+        if (!StringUtils.isEmpty(catelogId) && !"0".equals(catelogId)) {
+            wrapper.eq("catalog_id", catelogId);
         }
 
         String brandId = (String) params.get("brandId");
-        if(!StringUtils.isEmpty(brandId) && !"0".equals(brandId)){
-            wrapper.eq("brand_id",brandId);
+        if (!StringUtils.isEmpty(brandId) && !"0".equals(brandId)) {
+            wrapper.eq("brand_id", brandId);
         }
 
         String min = (String) params.get("min");
-        if(!StringUtils.isEmpty(min)  ){
+        if (!StringUtils.isEmpty(min)) {
             try {
                 BigDecimal bigDecimal = new BigDecimal(min);
-                if(bigDecimal.compareTo(new BigDecimal(0))==1){
-                    wrapper.ge("price",min);
+                if (bigDecimal.compareTo(new BigDecimal(0)) == 1) {
+                    wrapper.ge("price", min);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
 
         String max = (String) params.get("max");
-        if(!StringUtils.isEmpty(max)){
+        if (!StringUtils.isEmpty(max)) {
             try {
                 BigDecimal bigDecimal = new BigDecimal(max);
-                if(bigDecimal.compareTo(new BigDecimal(0))==1){
-                    wrapper.le("price",max);
+                if (bigDecimal.compareTo(new BigDecimal(0)) == 1) {
+                    wrapper.le("price", max);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-
-
-
-
-
-
 
 
         IPage<SkuInfoEntity> page = this.page(
@@ -135,7 +128,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
     @Override
     public List<SkuInfoEntity> getSkusBySpuId(Long spuId) {
-        List<SkuInfoEntity> list = this.list(new QueryWrapper<SkuInfoEntity>().eq("spu_id",spuId));
+        List<SkuInfoEntity> list = this.list(new QueryWrapper<SkuInfoEntity>().eq("spu_id", spuId));
 
 
         return list;
@@ -179,7 +172,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             skuItemVo.setImages(images);
         });
 
-        CompletableFuture.allOf(saleAttrFuture,descFuture,baseAttrFuture,imageFuture).get();
+        CompletableFuture.allOf(saleAttrFuture, descFuture, baseAttrFuture, imageFuture).get();
 
         //等待所有任务都完成
 

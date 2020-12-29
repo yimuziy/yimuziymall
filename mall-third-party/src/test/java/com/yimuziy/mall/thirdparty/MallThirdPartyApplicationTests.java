@@ -30,7 +30,7 @@ import java.util.Map;
 class MallThirdPartyApplicationTests {
 
     @Resource
-    OSSClient ossClient ;
+    OSSClient ossClient;
 
     @Value("${spring.cloud.alicloud.access-key}")
     private String accessId;
@@ -42,14 +42,13 @@ class MallThirdPartyApplicationTests {
     SmsComponent smsComponent;
 
     @Test
-    public void testSmsComponent(){
-        smsComponent.sendCode("17600300108","code:1234");
+    public void testSmsComponent() {
+        smsComponent.sendCode("17600300108", "code:1234");
     }
 
 
-
     @Test
-    public void testSendSms(){
+    public void testSendSms() {
         String host = "http://dingxin.market.alicloudapi.com";
         String path = "/dx/sendSms";
         String method = "POST";
@@ -85,7 +84,7 @@ class MallThirdPartyApplicationTests {
 
 
     @Test
-    public void sendSms(){
+    public void sendSms() {
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessId, secret);
         IAcsClient client = new DefaultAcsClient(profile);
 

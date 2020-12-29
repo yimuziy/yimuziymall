@@ -25,6 +25,7 @@ public interface AttrService extends IService<AttrEntity> {
 
     /**
      * 获取分类规格参数
+     *
      * @param params
      * @param catelogId
      * @param type
@@ -34,6 +35,7 @@ public interface AttrService extends IService<AttrEntity> {
 
     /**
      * 查询属性详情
+     *
      * @param attrId
      * @return
      */
@@ -41,12 +43,14 @@ public interface AttrService extends IService<AttrEntity> {
 
     /**
      * 修改属性
+     *
      * @param attr
      */
     void updateAttr(AttrVo attr);
 
     /**
      * 根据分组ID查找关联的所有属性
+     *
      * @param attrgroupId
      * @return
      */
@@ -54,12 +58,14 @@ public interface AttrService extends IService<AttrEntity> {
 
     /**
      * 删除属性与分组的关联关系
+     *
      * @param vos
      */
     void deleteRelation(AttrGroupRelationVo[] vos);
 
     /**
      * 获取属性分组里面还没有关联的本分类里面的其他基本属性，方便添加新的关联
+     *
      * @param params
      * @param attrgroupId
      * @return
@@ -68,6 +74,7 @@ public interface AttrService extends IService<AttrEntity> {
 
     /**
      * 在指定的所有属性集合里面，挑出检索属性
+     *
      * @param attrIds
      * @return
      */

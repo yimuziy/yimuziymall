@@ -3,7 +3,7 @@
 
 <mapper namespace="com.yimuziy.mall.product.dao.SkuSaleAttrValueDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.yimuziy.mall.product.entity.SkuSaleAttrValueEntity" id="skuSaleAttrValueMap">
         <result property="id" column="id"/>
         <result property="skuId" column="sku_id"/>
@@ -25,7 +25,7 @@
 
     <select id="getSaleAttrsBySpuId" resultMap="SkuItemSaleAttrVo">
 
-        select  ssav.attr_id attr_id,ssav.attr_name attr_name,ssav.attr_value,group_concat(distinct info.sku_id) sku_ids
+        select ssav.attr_id attr_id,ssav.attr_name attr_name,ssav.attr_value,group_concat(distinct info.sku_id) sku_ids
         from pms_sku_info info
         left join pms_sku_sale_attr_value ssav on info.sku_id = ssav.sku_id
         where info.spu_id=#{spuId}

@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 1、开启服务注册发现
- *  (配置nacos的服务注册配置)
+ * (配置nacos的服务注册配置)
  */
 
 @EnableDiscoveryClient
