@@ -20,6 +20,7 @@ public interface SkuFullReductionService extends IService<SkuFullReductionEntity
 
     /**
      * 保存Sku的优惠满减信息
+     *
      * @param reductionTo
      */
     void saveSkuReduction(SkuReductionTo reductionTo);

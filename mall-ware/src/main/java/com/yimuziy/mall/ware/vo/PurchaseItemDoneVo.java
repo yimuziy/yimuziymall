@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class PurchaseItemDoneVo {
     //temId:1,status:4,reason:""
-    private Long ItemId ;
+    private Long ItemId;
     private Integer status;
     private String reason;
 }

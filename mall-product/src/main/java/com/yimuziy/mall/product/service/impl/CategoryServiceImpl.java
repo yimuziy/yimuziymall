@@ -50,17 +50,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 级联更新所有关联的数据
-     *  @CacheEvict： 失效模式
-     *  1、同时进行多种缓存操作 @Caching
-     *  2、指定删除某个分区写所有的数据 @CacheEvict(value = "category",allEntries = true)
-     *  3、存储同一类型的数据，都可以指定成同一个分区。 分区名默认就是缓存的前缀
      *
      * @param category
+     * @CacheEvict： 失效模式
+     * 1、同时进行多种缓存操作 @Caching
+     * 2、指定删除某个分区写所有的数据 @CacheEvict(value = "category",allEntries = true)
+     * 3、存储同一类型的数据，都可以指定成同一个分区。 分区名默认就是缓存的前缀
      */
     //category : key
 //    @Caching(evict = { @CacheEvict(value = "category",key = "'getLevel1Categorys'"),
 //                        @CacheEvict(value = "category",key = "'getCatalogJson'")})
-    @CacheEvict(value = "category",allEntries = true)  //失效模式
+    @CacheEvict(value = "category", allEntries = true)  //失效模式
 //    @CachePut  //双写模式
     @Transactional
     @Override
@@ -73,42 +73,41 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     /**
-     *  1、每一个需要缓存的数据我们都来指定要放到那个名字的缓存。  【缓存的分区（按照业务类型分）】
-     *  2、@Cacheable({"category"})
-     *      代表当前方法的结果需要缓存，如果缓存中有，方法不用调用。
-     *      如果缓存中没有，会调用方法，最后将方法的结果放入缓存
-     *  3、默认行为
-     *      1）、如果缓存中有，方法不用调用。
-     *      2）、key默认自动生成； 缓存的名字::SimpleKey []（自主生成的key值）
-     *      3）、缓存的value的值。默认使用jdk序列化机制。将序列化后的数据存到redis
-     *      4）、默认时间： -1；
-     *
-     *     自定义：
-     *        1）、指定生成的缓存使用的key：  key属性指定。接收一个spEL表达式
-     *               spEL的详细: https://docs.spring.io/spring-framework/docs/5.2.12.RELEASE/spring-framework-reference/integration.html#cache-spel-context
-     *        2）、指定缓存的数据的存活时间:  配置文件中修改ttl
-     *        3）、将数据保存为json格式;
-     *               CacheAutoConfiguration
-     *               RedisCacheConfiguration
-     *  4、Spring-Cache的不足：
-     *      1）、读模式：
-     *          缓存穿透：查询一个个null数据。  解决：缓存空数据  spring.cache.redis.cache-null-values=true
-     *          缓存击穿：大量并发进来同时查询一个正好过期的数据。   解决：加锁（分布式锁） ？ 默认是无加锁的; sync = true(加锁，解决击穿)
-     *          缓存雪崩：大量的key同时过期。 解决： 加随机时间。加上过期时间
-     *      2）、写模式：（缓存与数据库一致）
-     *          1）、读写加锁。
-     *          2）、引入Canal,感知到MySQL的更新去更新数据库
-     *          3）、读多写多，直接去数据库查询就行
-     *     总结：
-     *          常规数据（读多写少，即时性，一致性要求不高的数据）；完全可以使用Spring-Cache；写模式（只要缓存的数据有过期时间就足够了）
-     *          特殊数据: 特殊设计
-     *  原理：
-     *      CacheManager(RedisCacheManager) -> Cache(RedisCache) -> Cache负责缓存的读写
-     *
+     * 1、每一个需要缓存的数据我们都来指定要放到那个名字的缓存。  【缓存的分区（按照业务类型分）】
+     * 2、@Cacheable({"category"})
+     * 代表当前方法的结果需要缓存，如果缓存中有，方法不用调用。
+     * 如果缓存中没有，会调用方法，最后将方法的结果放入缓存
+     * 3、默认行为
+     * 1）、如果缓存中有，方法不用调用。
+     * 2）、key默认自动生成； 缓存的名字::SimpleKey []（自主生成的key值）
+     * 3）、缓存的value的值。默认使用jdk序列化机制。将序列化后的数据存到redis
+     * 4）、默认时间： -1；
+     * <p>
+     * 自定义：
+     * 1）、指定生成的缓存使用的key：  key属性指定。接收一个spEL表达式
+     * spEL的详细: https://docs.spring.io/spring-framework/docs/5.2.12.RELEASE/spring-framework-reference/integration.html#cache-spel-context
+     * 2）、指定缓存的数据的存活时间:  配置文件中修改ttl
+     * 3）、将数据保存为json格式;
+     * CacheAutoConfiguration
+     * RedisCacheConfiguration
+     * 4、Spring-Cache的不足：
+     * 1）、读模式：
+     * 缓存穿透：查询一个个null数据。  解决：缓存空数据  spring.cache.redis.cache-null-values=true
+     * 缓存击穿：大量并发进来同时查询一个正好过期的数据。   解决：加锁（分布式锁） ？ 默认是无加锁的; sync = true(加锁，解决击穿)
+     * 缓存雪崩：大量的key同时过期。 解决： 加随机时间。加上过期时间
+     * 2）、写模式：（缓存与数据库一致）
+     * 1）、读写加锁。
+     * 2）、引入Canal,感知到MySQL的更新去更新数据库
+     * 3）、读多写多，直接去数据库查询就行
+     * 总结：
+     * 常规数据（读多写少，即时性，一致性要求不高的数据）；完全可以使用Spring-Cache；写模式（只要缓存的数据有过期时间就足够了）
+     * 特殊数据: 特殊设计
+     * 原理：
+     * CacheManager(RedisCacheManager) -> Cache(RedisCache) -> Cache负责缓存的读写
      *
      * @return
      */
-    @Cacheable(value = {"category"},key = "#root.method.name",sync = true)   //
+    @Cacheable(value = {"category"}, key = "#root.method.name", sync = true)   //
     @Override
     public List<CategoryEntity> getLevel1Categorys() {
         System.out.println("CategoryServiceImpl.getLevel1Categorys");
@@ -118,7 +117,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return categoryEntities;
     }
 
-    @Cacheable(value = "category",key = "#root.methodName")
+    @Cacheable(value = "category", key = "#root.methodName")
     @Override
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
 
@@ -203,10 +202,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 使用Redisson做分布式锁
-     *      问题：缓存里面的数据如何和数据库保持一致
-     *          缓存数据一致性
-     *          1）、双写模式
-     *          2）、失效模式
+     * 问题：缓存里面的数据如何和数据库保持一致
+     * 缓存数据一致性
+     * 1）、双写模式
+     * 2）、失效模式
+     *
      * @return
      */
     public Map<String, List<Catelog2Vo>> getCatalogJsonFromDbWithRedissonLock() {
@@ -215,7 +215,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         //所得粒度。具体缓存的式某个数据，11-号商品；   product-11-lock  product-12-lock
         RLock lock = redisson.getLock("catalogJson-json");
         lock.lock();
-
 
 
         Map<String, List<Catelog2Vo>> dataFromDb = null;

@@ -112,7 +112,7 @@ public class IndexController {
             redisTemplate.opsForValue().set("writeValue", s);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             rLock.unlock();
         }
 
@@ -150,13 +150,13 @@ public class IndexController {
         RSemaphore park = redisson.getSemaphore("park");
 //        park.acquire(); //获取一个信号，获取一个值,占一个车位
         boolean b = park.tryAcquire();
-        if(b){
+        if (b) {
             //执行业务
-        }else {
+        } else {
             return "error";
         }
 
-        return "ok =>"+b;
+        return "ok =>" + b;
     }
 
     @GetMapping("/go")
@@ -170,13 +170,10 @@ public class IndexController {
     }
 
 
-
-
     /**
      * 放假，锁门
      * 1班没人了，2版没人了。。。。。
      * 5个班全部走完了，我们可以锁大门
-     *
      */
     @GetMapping("/lockDoor")
     @ResponseBody
@@ -191,7 +188,7 @@ public class IndexController {
 
     @ResponseBody
     @GetMapping("/gogogo/{id}")
-    public String gogogo(@PathVariable("id")Long id){
+    public String gogogo(@PathVariable("id") Long id) {
         RCountDownLatch door = redisson.getCountDownLatch("door");
         door.countDown(); //计数减一;
 

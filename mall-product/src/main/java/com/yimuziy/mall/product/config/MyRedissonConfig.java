@@ -19,11 +19,12 @@ public class MyRedissonConfig {
 
     /**
      * 所有堆Redis的使用都是通过RedissonClient对象
+     *
      * @return
      * @throws IOException
      */
-    @Bean(destroyMethod="shutdown")
-    public  RedissonClient redisson() throws IOException {
+    @Bean(destroyMethod = "shutdown")
+    public RedissonClient redisson() throws IOException {
         //1、创建配置
         Config config = new Config();
         //rediss:// 来启动SSL连接    redis使用普通连接
@@ -32,7 +33,7 @@ public class MyRedissonConfig {
 
         //2、根据Config创建出RedissonClient示例
         RedissonClient redissonClient = Redisson.create(config);
-        return  redissonClient;
+        return redissonClient;
     }
 
 }

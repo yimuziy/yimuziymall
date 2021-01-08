@@ -1,7 +1,6 @@
 package com.yimuziy.mall.product.config;
 
-import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
@@ -27,16 +26,17 @@ public class MyCacheConfig {
 
     /**
      * 配置文件中的东西没有用上
-     *
+     * <p>
      * 1、原来和配置文件绑定的配置类是这个样子的
-     *      @ConfigurationProperties(prefix = "spring.cache")
-     *      public class CacheProperties
-     * 2、要让他生效
-     *      @EnableConfigurationProperties(CacheProperties.class)
+     *
      * @return
+     * @ConfigurationProperties(prefix = "spring.cache")
+     * public class CacheProperties
+     * 2、要让他生效
+     * @EnableConfigurationProperties(CacheProperties.class)
      */
     @Bean
-    RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties){
+    RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
 
 //        config = config.entryTtl();
@@ -59,7 +59,7 @@ public class MyCacheConfig {
             config = config.disableKeyPrefix();
         }
 
-        return  config;
+        return config;
     }
 
 }

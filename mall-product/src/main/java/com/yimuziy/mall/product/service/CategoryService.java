@@ -26,6 +26,7 @@ public interface CategoryService extends IService<CategoryEntity> {
     /**
      * 找到catelogId的完整路径
      * 【父/子/孙子】
+     *
      * @param catelogId
      * @return
      */
@@ -34,18 +35,21 @@ public interface CategoryService extends IService<CategoryEntity> {
 
     /**
      * 级联更新数据
+     *
      * @param category
      */
     void updateCascade(CategoryEntity category);
 
     /**
      * 查询所有的一级分类
+     *
      * @return
      */
     List<CategoryEntity> getLevel1Categorys();
 
     /**
      * 获取二级分类和三级分类
+     *
      * @return
      */
     Map<String, List<Catelog2Vo>> getCatalogJson();

@@ -7,19 +7,19 @@ public class Test {
 
     public static String output = "";
 
-    public static void foo(int i ){
-        try{
-            if(i == 1){
+    public static void foo(int i) {
+        try {
+            if (i == 1) {
                 throw new Exception();
             }
-            output+="1";
-        }catch (Exception e){
-            output +="2";
+            output += "1";
+        } catch (Exception e) {
+            output += "2";
             return;
-        }finally {
-            output+="3";
+        } finally {
+            output += "3";
         }
-        output+="3";
+        output += "3";
     }
 
     public static void main(String[] args) {
@@ -29,16 +29,17 @@ public class Test {
         System.out.println(output);
 
 
-        int i = 0,j = 5;
-        tp:for(;; i++){
+        int i = 0, j = 5;
+        tp:
+        for (; ; i++) {
 
-            for(;;j--){
-                if(i>j)
+            for (; ; j--) {
+                if (i > j)
                     break tp;
 
             }
         }
 
-        System.out.println("i="+i+",j="+j);
+        System.out.println("i=" + i + ",j=" + j);
     }
 }

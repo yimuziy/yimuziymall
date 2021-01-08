@@ -3,6 +3,8 @@ package com.yimuziy.mall.product.service.impl;
 import com.yimuziy.mall.product.entity.AttrEntity;
 import com.yimuziy.mall.product.service.AttrService;
 import com.yimuziy.mall.product.vo.AttrGroupWithAttrsVo;
+import com.yimuziy.mall.product.vo.SkuItemVo;
+import com.yimuziy.mall.product.vo.SpuItemAttrGroupVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,18 +46,18 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         String key = (String) params.get("key");
         //select * from pms_attr_group where catelog_id = ? and (attr_group_id=key or  attr_group_name like '%key%')
         QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<AttrGroupEntity>();
-        if(!StringUtils.isEmpty(key)){
-            wrapper.and((obj)->{
-                obj.eq("attr_group_id",key).or().like("attr_group_name",key);
+        if (!StringUtils.isEmpty(key)) {
+            wrapper.and((obj) -> {
+                obj.eq("attr_group_id", key).or().like("attr_group_name", key);
             });
         }
 
-        if( catelogId ==0){
+        if (catelogId == 0) {
             IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params),
                     wrapper);
             return new PageUtils(page);
-        }else{
-            wrapper.eq("catelog_id",catelogId);
+        } else {
+            wrapper.eq("catelog_id", catelogId);
 
             IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params),
                     wrapper);
@@ -68,6 +70,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     /**
      * 根据分类id查出所有的分组以及这些分组里面的属性
+     *
      * @param catelogId
      * @return
      */
@@ -90,16 +93,16 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         return collect;
     }
 
+    @Override
+    public List<SpuItemAttrGroupVo> getattrGroupWithAttrsBySpuId(Long spuId, Long catalogId) {
+        //1、查出当前spu对应的所有属性的分组信息以及当前分组下的所有属性对应的值
+        //1）、
+        AttrGroupDao baseMapper = this.getBaseMapper();
+        List<SpuItemAttrGroupVo> vos = baseMapper.etattrGroupWithAttrsBySpuId(spuId, catalogId);
 
 
-
-
-
-
-
-
-
-
+        return vos;
+    }
 
 
 }

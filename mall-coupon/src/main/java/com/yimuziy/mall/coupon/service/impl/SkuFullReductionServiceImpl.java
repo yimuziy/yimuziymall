@@ -54,15 +54,15 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionDao
         skuLadderEntity.setFullCount(reductionTo.getFullCount());
         skuLadderEntity.setDiscount(reductionTo.getDiscount());
         skuLadderEntity.setAddOther(reductionTo.getCountStatus());
-        if(skuLadderEntity.getFullCount() > 0){
+        if (skuLadderEntity.getFullCount() > 0) {
             skuLadderService.save(skuLadderEntity);
         }
 
 
         //2、 sms_sku_full_reduction
         SkuFullReductionEntity skuFullReductionEntity = new SkuFullReductionEntity();
-        BeanUtils.copyProperties(reductionTo,skuFullReductionEntity);
-        if(skuFullReductionEntity.getFullPrice().compareTo(new BigDecimal(0)) == 1){
+        BeanUtils.copyProperties(reductionTo, skuFullReductionEntity);
+        if (skuFullReductionEntity.getFullPrice().compareTo(new BigDecimal(0)) == 1) {
             this.save(skuFullReductionEntity);
         }
 
@@ -85,19 +85,6 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionDao
         memberPriceService.saveBatch(collect);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -36,7 +36,7 @@ public class BrandController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("product:brand:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = brandService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -48,14 +48,14 @@ public class BrandController {
      */
     @RequestMapping("/info/{brandId}")
     //@RequiresPermissions("product:brand:info")
-    public R info(@PathVariable("brandId") Long brandId){
-		BrandEntity brand = brandService.getById(brandId);
+    public R info(@PathVariable("brandId") Long brandId) {
+        BrandEntity brand = brandService.getById(brandId);
 
         return R.ok().put("brand", brand);
     }
 
     @GetMapping("/infos")
-    public R infos(@RequestParam("brandIds") List<Long> brandIds){
+    public R infos(@RequestParam("brandIds") List<Long> brandIds) {
         List<BrandEntity> brand = brandService.getBrandsByIds(brandIds);
 
         return R.ok().put("brand", brand);
@@ -66,8 +66,8 @@ public class BrandController {
      * 保存
      */
     @RequestMapping("/save")
-   // @RequiresPermissions("product:brand:save")
-    public R save(@Validated(value = {AddGroup.class}) @RequestBody BrandEntity brand/*, BindingResult result*/){
+    // @RequiresPermissions("product:brand:save")
+    public R save(@Validated(value = {AddGroup.class}) @RequestBody BrandEntity brand/*, BindingResult result*/) {
 //        if (result.hasErrors()) {
 //            HashMap<String, String> map = new HashMap<>();
 //            //1、获取校验的错误信息
@@ -81,7 +81,7 @@ public class BrandController {
 //
 //            return R.error(400,"提交的数据不合法").put("data",map);
 //        }
-		brandService.save(brand);
+        brandService.save(brand);
 
         return R.ok();
     }
@@ -91,9 +91,9 @@ public class BrandController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:brand:update")
-    public R update(@Validated(value = {UpdateGroup.class})@RequestBody BrandEntity brand){
+    public R update(@Validated(value = {UpdateGroup.class}) @RequestBody BrandEntity brand) {
 
-            brandService.updateDetail(brand);
+        brandService.updateDetail(brand);
 
         return R.ok();
     }
@@ -101,12 +101,13 @@ public class BrandController {
 
     /**
      * 修改状态
+     *
      * @param brand
      * @return
      */
     @RequestMapping("/update/status")
     //@RequiresPermissions("product:brand:update")
-    public R updateStatus(@Validated(value = {UpdateStatusGroup.class})@RequestBody BrandEntity brand){
+    public R updateStatus(@Validated(value = {UpdateStatusGroup.class}) @RequestBody BrandEntity brand) {
 
         brandService.updateById(brand);
 
@@ -118,8 +119,8 @@ public class BrandController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("product:brand:delete")
-    public R delete(@RequestBody Long[] brandIds){
-		brandService.removeByIds(Arrays.asList(brandIds));
+    public R delete(@RequestBody Long[] brandIds) {
+        brandService.removeByIds(Arrays.asList(brandIds));
 
         return R.ok();
     }

@@ -49,62 +49,62 @@ public class MallSearchApplicationTests {
     @Data
     static class Account {
 
-         private int account_number;
-         private int balance;
-         private String firstname;
-         private String lastname;
-         private int age;
-         private String gender;
-         private String address;
-         private String employer;
-         private String email;
-         private String city;
-         private String state;
-     }
+        private int account_number;
+        private int balance;
+        private String firstname;
+        private String lastname;
+        private int age;
+        private String gender;
+        private String address;
+        private String employer;
+        private String email;
+        private String city;
+        private String state;
+    }
 
     /**
-     *  {
-     *      skuId:1,
-     *      spuId:11
-     *      skuTitle:华为xx
-     *      price：998
-     *      saleCount：99
-     *      attrs:[
-     *          {尺寸： 5村},
-     *          {CPU： 高通945},
-     *          {分辨率：全高清}
-     *      ]
-     *  }
-     *
+     * {
+     * skuId:1,
+     * spuId:11
+     * skuTitle:华为xx
+     * price：998
+     * saleCount：99
+     * attrs:[
+     * {尺寸： 5村},
+     * {CPU： 高通945},
+     * {分辨率：全高清}
+     * ]
+     * }
+     * <p>
      * 冗余：
-     *      100万*20 = 1000000*2kb = 2000MB = 2G 20
+     * 100万*20 = 1000000*2kb = 2000MB = 2G 20
      * (2)、
-     *      sku索引{
-     *          skuId:1
-     *          spuId:11
-     *          xxxxx
-     *      }
-     *
-     *      attr索引{
-     *          spuId:11,
-     *          attrs:{
-     *              {尺寸： 5村},
-     *              {CPU： 高通945},
-     *              {分辨率：全高清}
-     *          }
-     *      }
-     *
-     *  搜索小米： 粮食，手机，电器。
-     *  10000个，4000个spu
-     *  分布，4000个spu对应的所有可能属性
-     *  esClient: spuId:[4000spuid]  4000*8=32000byte = 32kb
-     *
-     *  32kb*10000 = 320mb;
+     * sku索引{
+     * skuId:1
+     * spuId:11
+     * xxxxx
+     * }
+     * <p>
+     * attr索引{
+     * spuId:11,
+     * attrs:{
+     * {尺寸： 5村},
+     * {CPU： 高通945},
+     * {分辨率：全高清}
+     * }
+     * }
+     * <p>
+     * 搜索小米： 粮食，手机，电器。
+     * 10000个，4000个spu
+     * 分布，4000个spu对应的所有可能属性
+     * esClient: spuId:[4000spuid]  4000*8=32000byte = 32kb
+     * <p>
+     * 32kb*10000 = 320mb;
      *
      * @throws IOException
      */
     @Test
-    public void searchData() throws IOException{
+    public void searchData() throws IOException {
         //1、创建检索请求
         SearchRequest searchRequest = new SearchRequest();
         //指定索引
@@ -133,7 +133,6 @@ public class MallSearchApplicationTests {
 
         System.out.println("检索条件" + sourceBuilder.toString());
         searchRequest.source(sourceBuilder);
-
 
 
         //2、执行检索
@@ -168,17 +167,18 @@ public class MallSearchApplicationTests {
 //            //aggregation.get
 //
 //        }
-       Terms ageAgg1 = aggregations.get("ageAgg");
+        Terms ageAgg1 = aggregations.get("ageAgg");
         for (Terms.Bucket bucket : ageAgg1.getBuckets()) {
-            System.out.println("年龄:"+bucket.getKeyAsString());
+            System.out.println("年龄:" + bucket.getKeyAsString());
         }
 
         Avg balanceAvg1 = aggregations.get("balanceAvg");
-        System.out.println("平均薪资: "+balanceAvg1.getValue());
+        System.out.println("平均薪资: " + balanceAvg1.getValue());
 
 
 //        Aggregation balanceAvg2 = aggregations.get("balanceAvg");
     }
+
     /**
      * 测试存储数据到es
      * 更新也可以
@@ -205,7 +205,7 @@ public class MallSearchApplicationTests {
 
     @Test
     public void getData() throws IOException {
-        GetRequest getRequest = new GetRequest("users","1");
+        GetRequest getRequest = new GetRequest("users", "1");
 
         GetResponse documentFields = client.get(getRequest, RequestOptions.DEFAULT);
         String sourceAsString = documentFields.getSourceAsString();
@@ -214,7 +214,7 @@ public class MallSearchApplicationTests {
     }
 
     @Data
-    class User{
+    class User {
         private String userName;
         private String gender;
         private Integer age;

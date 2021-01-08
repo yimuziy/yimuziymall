@@ -12,67 +12,67 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- *  "mappings": {
- *     "properties": {
- *
- *       "spuId": {
- *         "type": "keyword"
- *       },
- *       "skuTitle":{
- *         "type": "text",
- *         "analyzer": "ik_smart"
- *       },
- *       "skuPrice": {
- *         "type": "keyword"
- *       },
- *       "skuImg":{
- *         "type": "keyword",
- *         "index": false,
- *         "doc_values": false
- *       },
- *       "saleCount": {
- *         "type": "long"
- *       },
- *       "hasStock": {
- *         "type": "boolean"
- *       },
- *       "hotScore":{
- *         "type": "long"
- *       },
- *       "brandId":{
- *         "type": "long"
- *       },
- *       "catelogId":{
- *         "type": "long"
- *       },
- *       "brandName":{
- *         "type": "keyword",
- *         "index": false,
- *         "doc_values": false
- *       },
- *       "brandImg":{
- *         "type": "keyword",
- *         "index": false,
- *         "doc_values": false
- *       },
- *       "attrs":{
- *         "type": "nested",
- *         "properties": {
- *           "attrId":{
- *             "type":"long"
- *           },
- *           "attrName":{
- *             "type":"keyword",
- *             "index": false,
- *             "doc_values":false
- *           },
- *           "attrValue":{
- *             "type": "keyword"
- *           }
- *         }
- *       }
- *     }
- *   }
+ * "mappings": {
+ * "properties": {
+ * <p>
+ * "spuId": {
+ * "type": "keyword"
+ * },
+ * "skuTitle":{
+ * "type": "text",
+ * "analyzer": "ik_smart"
+ * },
+ * "skuPrice": {
+ * "type": "keyword"
+ * },
+ * "skuImg":{
+ * "type": "keyword",
+ * "index": false,
+ * "doc_values": false
+ * },
+ * "saleCount": {
+ * "type": "long"
+ * },
+ * "hasStock": {
+ * "type": "boolean"
+ * },
+ * "hotScore":{
+ * "type": "long"
+ * },
+ * "brandId":{
+ * "type": "long"
+ * },
+ * "catelogId":{
+ * "type": "long"
+ * },
+ * "brandName":{
+ * "type": "keyword",
+ * "index": false,
+ * "doc_values": false
+ * },
+ * "brandImg":{
+ * "type": "keyword",
+ * "index": false,
+ * "doc_values": false
+ * },
+ * "attrs":{
+ * "type": "nested",
+ * "properties": {
+ * "attrId":{
+ * "type":"long"
+ * },
+ * "attrName":{
+ * "type":"keyword",
+ * "index": false,
+ * "doc_values":false
+ * },
+ * "attrValue":{
+ * "type": "keyword"
+ * }
+ * }
+ * }
+ * }
+ * }
  */
 @Data
 public class SkuEsModel {
@@ -93,7 +93,7 @@ public class SkuEsModel {
     private List<Attrs> attrs;
 
     @Data
-    public static class Attrs{
+    public static class Attrs {
         private Long attrId;
         private String attrName;
         private String attrValue;

@@ -17,7 +17,6 @@ import com.yimuziy.common.utils.PageUtils;
 import com.yimuziy.common.utils.R;
 
 
-
 /**
  * 首页轮播广告
  *
@@ -36,7 +35,7 @@ public class HomeAdvController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("coupon:homeadv:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = homeAdvService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -48,8 +47,8 @@ public class HomeAdvController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("coupon:homeadv:info")
-    public R info(@PathVariable("id") Long id){
-		HomeAdvEntity homeAdv = homeAdvService.getById(id);
+    public R info(@PathVariable("id") Long id) {
+        HomeAdvEntity homeAdv = homeAdvService.getById(id);
 
         return R.ok().put("homeAdv", homeAdv);
     }
@@ -58,9 +57,9 @@ public class HomeAdvController {
      * 保存
      */
     @RequestMapping("/save")
-   // @RequiresPermissions("coupon:homeadv:save")
-    public R save(@RequestBody HomeAdvEntity homeAdv){
-		homeAdvService.save(homeAdv);
+    // @RequiresPermissions("coupon:homeadv:save")
+    public R save(@RequestBody HomeAdvEntity homeAdv) {
+        homeAdvService.save(homeAdv);
 
         return R.ok();
     }
@@ -70,8 +69,8 @@ public class HomeAdvController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("coupon:homeadv:update")
-    public R update(@RequestBody HomeAdvEntity homeAdv){
-		homeAdvService.updateById(homeAdv);
+    public R update(@RequestBody HomeAdvEntity homeAdv) {
+        homeAdvService.updateById(homeAdv);
 
         return R.ok();
     }
@@ -81,8 +80,8 @@ public class HomeAdvController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("coupon:homeadv:delete")
-    public R delete(@RequestBody Long[] ids){
-		homeAdvService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long[] ids) {
+        homeAdvService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

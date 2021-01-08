@@ -1,0 +1,12 @@
+server:
+  port: 8082
+
+sso:
+  server:
+    url: http://ssoserver.com:8080/login.html
+
+
+spring:
+  redis:
+    host: 47.103.221.135
+    port: 6379

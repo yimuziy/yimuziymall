@@ -3,7 +3,7 @@
 
 <mapper namespace="com.yimuziy.mall.product.dao.SkuSaleAttrValueDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.yimuziy.mall.product.entity.SkuSaleAttrValueEntity" id="skuSaleAttrValueMap">
         <result property="id" column="id"/>
         <result property="skuId" column="sku_id"/>
@@ -12,6 +12,29 @@
         <result property="attrValue" column="attr_value"/>
         <result property="attrSort" column="attr_sort"/>
     </resultMap>
+
+    <resultMap id="SkuItemSaleAttrVo" type="com.yimuziy.mall.product.vo.SkuItemSaleAttrVo">
+        <result column="attr_id" property="attrId"></result>
+        <result column="attr_name" property="attrName"></result>
+        <collection property="attrValues" ofType="com.yimuziy.mall.product.vo.AttrValueWithSkuIdVo">
+            <result column="attr_value" property="attrValue"></result>
+            <result column="sku_ids" property="skuIds"></result>
+        </collection>
+    </resultMap>
+
+
+    <select id="getSaleAttrsBySpuId" resultMap="SkuItemSaleAttrVo">
+
+        select ssav.attr_id attr_id,ssav.attr_name attr_name,ssav.attr_value,group_concat(distinct info.sku_id) sku_ids
+        from pms_sku_info info
+        left join pms_sku_sale_attr_value ssav on info.sku_id = ssav.sku_id
+        where info.spu_id=#{spuId}
+        group by ssav.attr_id,ssav.attr_name,ssav.attr_value;
+    </select>
+    <select id="getSkuSaleAttrValuesAsStringList" resultType="java.lang.String">
+        select concat(attr_name,':',attr_value) from pms_sku_sale_attr_value
+        where sku_id = #{skuId}
+    </select>
 
 
 </mapper>

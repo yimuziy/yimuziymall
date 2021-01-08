@@ -23,7 +23,7 @@ public class Catelog2Vo {
     @AllArgsConstructor
     @NoArgsConstructor
     @Data
-    public static class Catelog3Vo{
+    public static class Catelog3Vo {
         private String catalog2Id;//父分类，2级分类id
         private String id;
         private String name;

@@ -14,8 +14,8 @@ public class MallCorsConfiguration {
 
 
     @Bean
-    public CorsWebFilter corsWebFilter(){
-        UrlBasedCorsConfigurationSource  source = new UrlBasedCorsConfigurationSource();
+    public CorsWebFilter corsWebFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
@@ -26,8 +26,7 @@ public class MallCorsConfiguration {
         corsConfiguration.setAllowCredentials(true);
 
 
-
-        source.registerCorsConfiguration("/**",corsConfiguration);
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsWebFilter(source);
     }
 }

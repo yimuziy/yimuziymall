@@ -31,7 +31,7 @@ public class OssController {
     private String accessId;
 
     @RequestMapping("/oss/policy")
-    public R policy(){
+    public R policy() {
         //https://yimuziy-mall.oss-cn-beijing.aliyuncs.com/5b5e74d0978360a1.jpg
 
         // host的格式为 bucketname.endpoint
@@ -42,7 +42,8 @@ public class OssController {
         // 用户上传文件时指定的前缀。
         String dir = format + "/";
 
-        Map<String, String> respMap = null; ;
+        Map<String, String> respMap = null;
+        ;
         try {
             long expireTime = 30;
             long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
@@ -74,7 +75,7 @@ public class OssController {
             ossClient.shutdown();
         }
 
-        return R.ok().put("data",respMap);
+        return R.ok().put("data", respMap);
     }
 
 }

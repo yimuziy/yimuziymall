@@ -42,13 +42,13 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         QueryWrapper<WareSkuEntity> wrapper = new QueryWrapper<>();
 
         String skuId = (String) params.get("skuId");
-        if(!StringUtils.isEmpty(skuId)){
-            wrapper.eq("sku_id",skuId);
+        if (!StringUtils.isEmpty(skuId)) {
+            wrapper.eq("sku_id", skuId);
         }
 
         String wareId = (String) params.get("wareId");
-        if(!StringUtils.isEmpty(wareId)){
-            wrapper.eq("ware_id",wareId);
+        if (!StringUtils.isEmpty(wareId)) {
+            wrapper.eq("ware_id", wareId);
         }
 
 
@@ -69,7 +69,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 eq("ware_id", wareId));
 
 
-        if(wareSkuEntities.size() == 0 || wareSkuEntities == null){
+        if (wareSkuEntities.size() == 0 || wareSkuEntities == null) {
             WareSkuEntity wareSkuEntity = new WareSkuEntity();
             wareSkuEntity.setSkuId(skuId);
             wareSkuEntity.setWareId(wareId);
@@ -78,18 +78,18 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             //TODO 远程查询sku的名字,如果失败整个事务无需回滚
             //1、自己catche异常
             //TODO 还可以用什么办法异常出现以后不回滚？高级不放呢
-            try{
+            try {
                 R info = productFeignService.info(skuId);
-                if(info.getCode() == 0){
-                    Map<String,Object> data  = (Map<String, Object>) info.get("skuInfo");
+                if (info.getCode() == 0) {
+                    Map<String, Object> data = (Map<String, Object>) info.get("skuInfo");
                     wareSkuEntity.setSkuName((String) data.get("skuName"));
                 }
-            }catch (Exception e ){
+            } catch (Exception e) {
 
             }
 
             wareSkuDao.insert(wareSkuEntity);
-        }else {
+        } else {
             wareSkuDao.addStock(skuId, wareId, skuNum);
         }
     }

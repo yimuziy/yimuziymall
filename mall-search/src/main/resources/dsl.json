@@ -1,4 +1,3 @@
-
 {
   "query": {
     "bool": {
@@ -171,7 +170,7 @@
             "size": 10
           }
         },
-        "brand_img":{
+        "brand_img": {
           "terms": {
             "field": "brandImg",
             "size": 10
@@ -179,7 +178,7 @@
         }
       }
     },
-    "catelog_agg":{
+    "catelog_agg": {
       "terms": {
         "field": "catalogId",
         "size": 10
@@ -193,7 +192,7 @@
         }
       }
     },
-    "attr_agg":{
+    "attr_agg": {
       "nested": {
         "path": "attrs"
       },
@@ -210,7 +209,7 @@
                 "size": 10
               }
             },
-            "attr_value_agg":{
+            "attr_value_agg": {
               "terms": {
                 "field": "attrs.attrValue",
                 "size": 10
@@ -220,6 +219,5 @@
         }
       }
     }
-
   }
 }

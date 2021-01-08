@@ -4,6 +4,7 @@ import com.yimuziy.common.exception.BizCodeEnum;
 import com.yimuziy.common.to.es.SkuEsModel;
 import com.yimuziy.common.utils.R;
 import com.yimuziy.mall.search.service.ProductSaveService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,18 +30,18 @@ public class ElasticSaveController {
 
     //上架商品
     @PostMapping("/product")
-    public R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels){
+    public R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels) {
         boolean b = false;
         try {
             b = productSaveService.productStatusUp(skuEsModels);
-        }catch (Exception e ){
-            log.error("ELasticSaveController商品上架错误： {}",e);
-            return R.error(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(),BizCodeEnum.PRODUCT_UP_EXCEPTION.getMsg());
+        } catch (Exception e) {
+            log.error("ELasticSaveController商品上架错误： {}", e);
+            return R.error(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(), BizCodeEnum.PRODUCT_UP_EXCEPTION.getMsg());
         }
-        if(!b){
+        if (!b) {
             return R.ok();
-        }else {
-            return  R.error(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(),BizCodeEnum.PRODUCT_UP_EXCEPTION.getMsg());
+        } else {
+            return R.error(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(), BizCodeEnum.PRODUCT_UP_EXCEPTION.getMsg());
         }
 
     }

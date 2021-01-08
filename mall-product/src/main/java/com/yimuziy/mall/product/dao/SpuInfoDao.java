@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * spu信息
- * 
+ *
  * @author yimuziy
  * @email yimuziy@gmail.com
  * @date 2020-11-26 16:42:21
