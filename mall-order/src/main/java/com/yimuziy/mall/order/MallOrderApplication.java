@@ -3,6 +3,10 @@ package com.yimuziy.mall.order;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * 1、引入amqp场景
+ */
+
 @SpringBootApplication
 public class MallOrderApplication {
 

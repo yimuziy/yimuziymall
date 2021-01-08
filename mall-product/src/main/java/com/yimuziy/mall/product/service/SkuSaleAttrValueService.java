@@ -26,5 +26,12 @@ public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValueEntity
      * @return
      */
     List<SkuItemSaleAttrVo> getSaleAttrsBySpuId(Long spuId);
+
+    /**
+     * 根据skuId 查出其销售属性是  黑色:红色
+     * @param skuId
+     * @return
+     */
+    List<String> getSkuSaleAttrValuesAsStringList(Long skuId);
 }
 
