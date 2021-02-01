@@ -25,6 +25,7 @@ public class MallSessionConfig {
         cookieSerializer.setDomainName("yimuziymall.com");
         cookieSerializer.setCookieName("YIMUZIYSESSION");
 
+
         return cookieSerializer;
     }
 

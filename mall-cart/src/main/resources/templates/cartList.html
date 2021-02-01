@@ -146,7 +146,7 @@
 					</div>
 					<div>
 						<ol>
-							<li>总价:<span style="color:#e64346;font-weight:bold;font-size:16px;" class="fnt">￥0.00</span> </li>
+							<li>总价:<span style="color:#e64346;font-weight:bold;font-size:16px;" class="fnt">￥[[${#numbers.formatDecimal(cart.getTotalAmount(),3,2)}]]</span> </li>
 
 						</ol>
 					</div>
@@ -218,7 +218,7 @@
 	<script src="/static/cart/js/index.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		function toTrade() {
-			window.location.href = "http://cart.gmall.com:8087/toTrade";
+			window.location.href = "http://order.yimuziymall.com/toTrade";
 		}
 
 		function toItem(skuId) {
