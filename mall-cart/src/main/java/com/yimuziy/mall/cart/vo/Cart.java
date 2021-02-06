@@ -55,8 +55,9 @@ public class Cart {
         if (items != null && items.size() > 0) {
             for (CartItem item : items) {
                 if(item.getCheck()){
-                    BigDecimal totalPrice = item.getTotalPrice();
-                    amount = amount.add(totalPrice);
+                        BigDecimal totalPrice = item.getTotalPrice();
+                        amount = amount.add(totalPrice);
+
                 }
             }
         }

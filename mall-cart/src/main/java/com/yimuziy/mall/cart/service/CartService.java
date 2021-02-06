@@ -3,6 +3,7 @@ package com.yimuziy.mall.cart.service;
 import com.yimuziy.mall.cart.vo.Cart;
 import com.yimuziy.mall.cart.vo.CartItem;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -61,4 +62,11 @@ public interface CartService {
      * @param skuId
      */
     void deleteItem(Long skuId);
+
+    /**
+     * 获取购物车里面的购物项
+     * @return
+     */
+    List<CartItem> getUserCartItems();
+
 }

@@ -33,12 +33,19 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment}
 
-        - id: member_route
+        - id: ware_route
           uri: lb://mall-ware
           predicates:
             - Path=/api/ware/**
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/renren-fast/**
+          filters:
+            - RewritePath=/api/renren-fast/(?<segment>/?.*), /$\{segment}
 
         - id: yimuziy_product_route
           uri: lb://mall-product
@@ -59,6 +66,11 @@ spring:
           uri: lb://mall-cart
           predicates:
             - Host=cart.yimuziymall.com
+
+        - id: yimuziy_order_route
+          uri: lb://mall-order
+          predicates:
+            - Host=order.yimuziymall.com
 
 
 

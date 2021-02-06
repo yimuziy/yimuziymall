@@ -27,7 +27,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
 class MallProductApplicationTests {
