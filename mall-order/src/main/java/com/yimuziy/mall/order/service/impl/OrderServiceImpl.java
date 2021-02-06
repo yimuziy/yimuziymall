@@ -1,12 +1,16 @@
 package com.yimuziy.mall.order.service.impl;
 
+import com.alibaba.fastjson.TypeReference;
+import com.yimuziy.common.utils.R;
 import com.yimuziy.common.vo.MemberRespVo;
 import com.yimuziy.mall.order.feign.CartFeignService;
 import com.yimuziy.mall.order.feign.MemberFeignService;
+import com.yimuziy.mall.order.feign.WmsFeignService;
 import com.yimuziy.mall.order.interceptor.LoginUserInterceptor;
 import com.yimuziy.mall.order.vo.MemberAddressVo;
 import com.yimuziy.mall.order.vo.OrderConfirmVo;
 import com.yimuziy.mall.order.vo.OrderItemVo;
+import com.yimuziy.mall.order.vo.SKuStockVo;
 import org.eclipse.jetty.util.Promise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -41,6 +46,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Autowired
     ThreadPoolExecutor executor;
+
+    @Autowired
+    WmsFeignService wmsFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -80,7 +88,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             confirmVo.setItems(items);
             //feign在远程调用之前要构造请求，调用很多的拦截器
             //RequestInterceptor interceptor : requestInterceptors
-        }, executor);
+        }, executor).thenRunAsync(()->{
+            List<OrderItemVo> items = confirmVo.getItems();
+            List<Long> collect = items.stream().map(item -> item.getSkuId()).collect(Collectors.toList());
+
+            //TODO一定要启动库存服务，否则库存查不出。
+            R hasStock = wmsFeignService.getSkuHasStock(collect);
+            List<SKuStockVo> data = hasStock.getData(new TypeReference<List<SKuStockVo>>() {
+            });
+            if(data != null){
+                Map<Long, Boolean> map = data.stream().collect(Collectors.toMap(SKuStockVo::getSkuId, SKuStockVo::getHasStock));
+                confirmVo.setStocks(map);
+            }
+        });
 
 
 
