@@ -43,9 +43,9 @@ spring:
         - id: admin_route
           uri: lb://renren-fast
           predicates:
-            - Path=/api/renren-fast/**
+            - Path=/api/**
           filters:
-            - RewritePath=/api/renren-fast/(?<segment>/?.*), /$\{segment}
+            - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
 
         - id: yimuziy_product_route
           uri: lb://mall-product
