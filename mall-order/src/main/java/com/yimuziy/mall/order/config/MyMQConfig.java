@@ -21,11 +21,7 @@ import java.util.Map;
 @Configuration
 public class MyMQConfig {
 
-    @RabbitListener(queues = "order.release.order.queue")
-    public void listener(OrderEntity entity, Channel channel, Message message) throws IOException {
-        System.out.println("收到过期的订单信息；准备关闭订单"+entity.getOrderSn());
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
-    }
+
 
     //@Bean  Binding，Queue，Exchange
 
@@ -86,6 +82,21 @@ public class MyMQConfig {
                 "order.release.order",
                 null);
     }
+
+
+    /**
+     * 订单释放直接和库存释放进行绑定
+     * @return
+     */
+    @Bean
+    public Binding orderReleaseOtherBingding(){
+        return new Binding("stock.release.stock.queue",
+                Binding.DestinationType.QUEUE,
+                "order-event-exchange",
+                "order.release.other.#",
+                null);
+    }
+
 
 
 }

@@ -72,6 +72,11 @@ spring:
           predicates:
             - Host=order.yimuziymall.com
 
+        - id: yimuziy_member_route
+          uri: lb://mall-member
+          predicates:
+            - Host=member.yimuziymall.com
+
 
 
 

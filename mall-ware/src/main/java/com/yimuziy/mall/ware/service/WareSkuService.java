@@ -1,6 +1,8 @@
 package com.yimuziy.mall.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yimuziy.common.to.mq.OrderTo;
+import com.yimuziy.common.to.mq.StockLockedTo;
 import com.yimuziy.common.utils.PageUtils;
 import com.yimuziy.mall.ware.entity.WareSkuEntity;
 import com.yimuziy.mall.ware.vo.LockStockResult;
@@ -32,5 +34,11 @@ public interface WareSkuService extends IService<WareSkuEntity> {
      * @return
      */
     Boolean orderLockStock(WareSkuLockVo vo);
+
+
+
+    void unlockStock(StockLockedTo to);
+
+    void unlockStock(OrderTo orderTo);
 }
 

@@ -1,4 +1,4 @@
-package com.yimuziy.mall.order.interceptor;
+package com.yimuziy.mall.member.interceptor;
 
 import com.yimuziy.common.constant.AuthServerConstant;
 import com.yimuziy.common.vo.MemberRespVo;
@@ -22,13 +22,13 @@ public class LoginUserInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        // /order/order/status/{orderSn}
-        String uri = request.getRequestURI();
-        AntPathMatcher antPathMatcher = new AntPathMatcher();
-        boolean match = antPathMatcher.match("/order/order/status/**", uri);
-        boolean notifyUri = antPathMatcher.match("/payed/notify", uri);
+        ///member/memberreceiveaddress/info/{id}
 
-        if(match || notifyUri){
+
+
+        String uri = request.getRequestURI();
+        boolean match = new AntPathMatcher().match("/member/**", uri);
+        if(match){
             return true;
         }
 
@@ -42,6 +42,8 @@ public class LoginUserInterceptor implements HandlerInterceptor {
             response.sendRedirect("http://auth.yimuziymall.com/login.html");
             return false;
         }
+
+
 
     }
 }

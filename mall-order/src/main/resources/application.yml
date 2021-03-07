@@ -13,6 +13,8 @@ spring:
         server-addr: 47.103.221.135:8848
   application:
     name: mall-order
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
 
 
 mybatis-plus:
@@ -51,3 +53,6 @@ seata:
 
 
 
+#支付宝相关的设置
+alipay:
+  app-id: 2021000117619033
