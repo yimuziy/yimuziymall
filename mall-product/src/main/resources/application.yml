@@ -40,7 +40,7 @@ mybatis-plus:
       logic-not-delete-value: 0
 logging:
   level:
-    com.yimuziy.mall: debug
+    com.yimuziy.mall: info
 
 
 ribbon:

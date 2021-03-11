@@ -1,9 +1,12 @@
 package com.yimuziy.mall.product.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.alibaba.fastjson.TypeReference;
+import com.yimuziy.common.utils.R;
 import com.yimuziy.mall.product.entity.SkuImagesEntity;
 import com.yimuziy.mall.product.entity.SpuInfoDescEntity;
+import com.yimuziy.mall.product.feign.SeckillFeignService;
 import com.yimuziy.mall.product.service.*;
+import com.yimuziy.mall.product.vo.SeckillInfoVo;
 import com.yimuziy.mall.product.vo.SkuItemSaleAttrVo;
 import com.yimuziy.mall.product.vo.SkuItemVo;
 import com.yimuziy.mall.product.vo.SpuItemAttrGroupVo;
@@ -46,6 +49,9 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
     @Autowired
     ThreadPoolExecutor executor;
+
+    @Autowired
+    SeckillFeignService seckillFeignService;
 
 
     @Override
@@ -170,9 +176,22 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         CompletableFuture<Void> imageFuture = CompletableFuture.runAsync(() -> {
             List<SkuImagesEntity> images = imagesService.getImagesBySkuId(skuId);
             skuItemVo.setImages(images);
-        });
+        },executor);
 
-        CompletableFuture.allOf(saleAttrFuture, descFuture, baseAttrFuture, imageFuture).get();
+        //3、查询当前sku是否参与秒杀优惠
+        CompletableFuture<Void> seckillFuture = CompletableFuture.runAsync(() -> {
+            R seckillInfo = seckillFeignService.getSkuSeckillInfo(skuId);
+            if (seckillInfo.getCode() == 0) {
+                SeckillInfoVo seckillInfoVo = seckillInfo.getData(new TypeReference<SeckillInfoVo>() {
+                });
+                if (seckillInfoVo != null) {
+                    skuItemVo.setSeckillInfo(seckillInfoVo);
+                }
+            }
+        }, executor);
+
+
+        CompletableFuture.allOf(saleAttrFuture, descFuture, baseAttrFuture, imageFuture,seckillFuture).get();
 
         //等待所有任务都完成
 

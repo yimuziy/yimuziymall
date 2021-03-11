@@ -1,6 +1,7 @@
 package com.yimuziy.mall.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yimuziy.common.to.mq.SeckillOrderTo;
 import com.yimuziy.common.utils.PageUtils;
 import com.yimuziy.mall.order.entity.OrderEntity;
 import com.yimuziy.mall.order.vo.*;
@@ -65,5 +66,11 @@ public interface OrderService extends IService<OrderEntity> {
      * @return
      */
     String handlePayresult(PayAsyncVo vo);
+
+    /**
+     * 秒杀后创建订单信息
+     * @param seckillOrder
+     */
+    void createSeckillOrder(SeckillOrderTo seckillOrder);
 }
 

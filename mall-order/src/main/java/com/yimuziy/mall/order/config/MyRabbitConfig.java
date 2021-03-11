@@ -2,6 +2,7 @@ package com.yimuziy.mall.order.config;
 
 
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -9,6 +10,8 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 
 import javax.annotation.PostConstruct;
 
@@ -20,9 +23,25 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class MyRabbitConfig {
 
-    @Autowired
+//    @Autowired
     RabbitTemplate rabbitTemplate;
 
+//    public MyRabbitConfig(RabbitTemplate rabbitTemplate){
+//        this.rabbitTemplate = rabbitTemplate;
+//        initRabbitTemplate();
+//    }
+
+
+    @Primary
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory){
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        this.rabbitTemplate = rabbitTemplate;
+        rabbitTemplate.setMessageConverter(messageConverter());
+        initRabbitTemplate();
+        return rabbitTemplate;
+    }
+    
     /**
      * 使用JSON序列化机制，进行消息转换
      * @return
@@ -52,7 +71,7 @@ public class MyRabbitConfig {
      *          channel.basicAck(deliveryTag, false); 签收获取；业务成功完成就应该签收
      *          channel.basicNack(deliveryTag,false,true); 拒签；业务失败，拒签
      */
-    @PostConstruct  //MyRabbitConfig对象创建完成以后，执行这个方法
+//    @PostConstruct  //MyRabbitConfig对象创建完成以后，执行这个方法
     public void initRabbitTemplate() {
         //设置确认回调
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {

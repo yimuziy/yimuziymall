@@ -19,6 +19,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment}
 
+        - id: coupon_route
+          uri: lb://mall-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+
         - id: third-party-route
           uri: lb://mall-third-party
           predicates:
@@ -76,6 +83,11 @@ spring:
           uri: lb://mall-member
           predicates:
             - Host=member.yimuziymall.com
+
+        - id: yimuziy_seckill_route
+          uri: lb://mall-seckill
+          predicates:
+            - Host=seckill.yimuziymall.com
 
 
 
