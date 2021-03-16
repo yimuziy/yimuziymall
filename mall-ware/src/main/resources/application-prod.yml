@@ -1,10 +1,10 @@
 server:
-  port: 11000
+  port: 8080
 
 spring:
   datasource:
     username: root
-    password: root
+    password: 123456
     url: jdbc:mysql://mysql-master.yimuziymall/mall_wms
     driver-class-name: com.mysql.cj.jdbc.Driver
 

@@ -18,4 +18,4 @@ spring:
 
         sms_Domain: dysmsapi.aliyuncs.com
 server:
-  port: 30000
+  port: 8080

@@ -25,7 +25,7 @@ spring:
 #      pool:
 #        size: 5
 server:
-  port: 25000
+  port: 8080
 management:
   endpoints:
     web:

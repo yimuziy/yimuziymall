@@ -18,7 +18,7 @@
         <module>mall-product</module>
         <module>mall-ware</module>
         <module>renren-fast</module>
-        <module>renren-generator</module>
+<!--        <module>renren-generator</module>-->
         <module>mall-common</module>
         <module>mall-auth-server</module>
         <module>mall-cart</module>
