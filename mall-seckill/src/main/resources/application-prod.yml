@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: mall-seckill
+  cloud:
+
+    sentinel:
+      transport:
+        port: 8719
+
+
+
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 50
+  session:
+    store-type: redis
+
+
+  thymeleaf:
+    cache: false
+#  task:
+#    scheduling:
+#      pool:
+#        size: 5
+server:
+  port: 25000
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+
+
+

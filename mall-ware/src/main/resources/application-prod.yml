@@ -1,0 +1,51 @@
+server:
+  port: 11000
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://mysql-master.yimuziymall/mall_wms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  application:
+    name: mall-ware
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+logging:
+  level:
+    com.yimuziy: debug
+
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  enable-auto-data-source-proxy: false
+  tx-service-group: mall-ware-fescar-service-group
+  service:
+    vgroup-mapping:
+      mall-ware-fescar-service-group: default
+  config:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.discovery.server-addr}
+      group: "SEATA_GROUP"
+      namespace: "604612ef-7fdf-460d-ab38-82a7158ec761"
+      username: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: ${spring.cloud.nacos.discovery.server-addr}
+      group : "SEATA_GROUP"
+      namespace: "604612ef-7fdf-460d-ab38-82a7158ec761"
+      username: "nacos"
+      password: "nacos"
+      cluster: default
