@@ -1,0 +1,21 @@
+spring:
+  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 47.103.221.135:8848
+    alicloud:
+      access-key: LTAI5tPGsJ7BPYN84kmNQACD
+      secret-key: FMtnC3VZNOLtHbHV2vkdM3DN9vhtJ7
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: yimuziy-mall
+
+      sms:
+        host: https://smssend.shumaidata.com
+        path: /sms/send
+        tpl_id: M09DD535F4
+        appcode: 1222c06c2f29474cb630214a2f14051c
+
+        sms_Domain: dysmsapi.aliyuncs.com
+server:
+  port: 8080

@@ -2,6 +2,7 @@ package com.yimuziy.mall.order.config;
 
 
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -9,6 +10,8 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 
 import javax.annotation.PostConstruct;
 
@@ -20,9 +23,29 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class MyRabbitConfig {
 
-    @Autowired
+//    @Autowired
     RabbitTemplate rabbitTemplate;
 
+//    public MyRabbitConfig(RabbitTemplate rabbitTemplate){
+//        this.rabbitTemplate = rabbitTemplate;
+//        initRabbitTemplate();
+//    }
+
+
+    @Primary
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory){
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        this.rabbitTemplate = rabbitTemplate;
+        rabbitTemplate.setMessageConverter(messageConverter());
+        initRabbitTemplate();
+        return rabbitTemplate;
+    }
+    
+    /**
+     * 使用JSON序列化机制，进行消息转换
+     * @return
+     */
     @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
@@ -48,7 +71,7 @@ public class MyRabbitConfig {
      *          channel.basicAck(deliveryTag, false); 签收获取；业务成功完成就应该签收
      *          channel.basicNack(deliveryTag,false,true); 拒签；业务失败，拒签
      */
-    @PostConstruct  //MyRabbitConfig对象创建完成以后，执行这个方法
+//    @PostConstruct  //MyRabbitConfig对象创建完成以后，执行这个方法
     public void initRabbitTemplate() {
         //设置确认回调
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
@@ -61,6 +84,13 @@ public class MyRabbitConfig {
              */
             @Override
             public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+
+                /**
+                 * TODO 为了保证消息的可靠性
+                 * 1、做好消息确认机制（publisher, consumer 【手动ack】）
+                 * 2、每一个发送的消息都在数据库做好记录。定期将失败的消息再次发送一遍
+                 */
+                //服务器收到了
                 System.out.println("confirm.....correlationData[" + correlationData + "] ==> ack= " + ack + "]==>cause=" + cause);
 
             }
@@ -78,6 +108,8 @@ public class MyRabbitConfig {
              */
             @Override
             public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
+
+                //TODO 报错误了。 修改数据库当前消息的错误状态 ——> 错误。
                 System.out.println("Fail Message[" + message + "]==>replyCode[" + replyCode +"]==>replyText["+replyText+
                         "]==>exchange[" + exchange + "]==>routingKey[" + routingKey + "]");
             }

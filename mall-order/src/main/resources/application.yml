@@ -13,6 +13,8 @@ spring:
         server-addr: 47.103.221.135:8848
   application:
     name: mall-order
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
 
 
 mybatis-plus:
@@ -20,3 +22,37 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  enable-auto-data-source-proxy: false
+  tx-service-group: mall-order-fescar-service-group
+  service:
+    vgroup-mapping:
+      mall-order-fescar-service-group: default
+  config:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.discovery.server-addr}
+      group: "SEATA_GROUP"
+      namespace: "604612ef-7fdf-460d-ab38-82a7158ec761"
+      username: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+
+    nacos:
+      application: seata-server
+      server-addr: ${spring.cloud.nacos.discovery.server-addr}
+      group : "SEATA_GROUP"
+      namespace: "604612ef-7fdf-460d-ab38-82a7158ec761"
+      username: "nacos"
+      password: "nacos"
+      cluster: default
+
+
+
+#支付宝相关的设置
+alipay:
+  app-id: 2021000117619033

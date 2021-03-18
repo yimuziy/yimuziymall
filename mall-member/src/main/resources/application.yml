@@ -13,6 +13,13 @@ spring:
         server-addr: 47.103.221.135:8848
   application:
     name: mall-member
+  session:
+    store-type: redis
+
+  redis:
+    host: 47.103.221.135
+
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:

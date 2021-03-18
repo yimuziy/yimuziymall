@@ -13,6 +13,7 @@ import com.yimuziy.mall.product.feign.SearchFeignService;
 import com.yimuziy.mall.product.feign.WareFeignService;
 import com.yimuziy.mall.product.service.*;
 import com.yimuziy.mall.product.vo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 
+@Slf4j
 @Service("spuInfoService")
 public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> implements SpuInfoService {
 
@@ -83,9 +85,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     /**
      * //TODO 高级部分完善
-     *
+     * @GlobalTransactional
      * @param vo
      */
+    //Seata AT分布式事务
     @Transactional()
     @Override
     public void saveSpuInfo(SpuSaveVo vo) {
@@ -352,6 +355,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         if (r.getCode() == 0) {
             //远程调用成功
             //TODO 6、修改当前spu的状态
+            log.info("商品存入elasticsearch");
             this.baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_UP.getCode());
         } else {
             //远程调用失败
@@ -375,6 +379,14 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         }
 
 
+    }
+
+    @Override
+    public SpuInfoEntity getSpuInfoBySkuId(Long skuId) {
+        SkuInfoEntity byId = skuInfoService.getById(skuId);
+        Long spuId = byId.getSpuId();
+        SpuInfoEntity spuInfoEntity = getById(spuId);
+        return  spuInfoEntity;
     }
 
 

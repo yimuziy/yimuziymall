@@ -1,18 +1,19 @@
 package com.yimuziy.mall.ware.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.yimuziy.common.exception.BizCodeEnum;
+import com.yimuziy.common.utils.PageUtils;
+import com.yimuziy.common.utils.R;
+import com.yimuziy.mall.ware.entity.WareSkuEntity;
+import com.yimuziy.common.exception.NoStockException;
+import com.yimuziy.mall.ware.service.WareSkuService;
 import com.yimuziy.mall.ware.vo.SkuHasStockVo;
+import com.yimuziy.mall.ware.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.yimuziy.mall.ware.entity.WareSkuEntity;
-import com.yimuziy.mall.ware.service.WareSkuService;
-import com.yimuziy.common.utils.PageUtils;
-import com.yimuziy.common.utils.R;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,6 +28,23 @@ import com.yimuziy.common.utils.R;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    /**
+     * 锁定库存
+     * @param vo
+     * @return
+     */
+    @PostMapping("/lock/order")
+    public R orderLockStock(@RequestBody WareSkuLockVo vo) {
+
+        try {
+            Boolean  stock = wareSkuService.orderLockStock(vo);
+            return R.ok();
+        } catch (NoStockException e) {
+           return R.error(BizCodeEnum.NO_STOCK_EXCEPTION.getCode(),BizCodeEnum.NO_STOCK_EXCEPTION.getMsg());
+        }
+    }
+
 
     /**
      * 查询sku是否有库存

@@ -3,6 +3,7 @@ package com.yimuziy.mall.order.interceptor;
 import com.yimuziy.common.constant.AuthServerConstant;
 import com.yimuziy.common.vo.MemberRespVo;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,16 @@ public class LoginUserInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        // /order/order/status/{orderSn}
+        String uri = request.getRequestURI();
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        boolean match = antPathMatcher.match("/order/order/status/**", uri);
+        boolean notifyUri = antPathMatcher.match("/payed/notify", uri);
+
+        if(match || notifyUri){
+            return true;
+        }
 
         MemberRespVo attribute = (MemberRespVo) request.getSession().getAttribute(AuthServerConstant.LOGIN_USER);
         if (attribute != null) {

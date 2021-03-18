@@ -1,0 +1,13 @@
+
+
+  application:
+    name: mall-search
+
+  thymeleaf:
+    cache: false
+  session:
+    store-type: redis
+
+
+server:
+  port: 8080

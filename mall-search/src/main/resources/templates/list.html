@@ -2078,7 +2078,8 @@
             //替换pageNum的值
             location.href = replaceAndAddParamVal(href, "pageNum", pn);
         } else {
-            location.href = location.href + "&pageNum=" + pn;
+
+            location.href = replaceAndAddParamVal(href, "pageNum", pn);
         }
 
         return false;

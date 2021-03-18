@@ -32,7 +32,7 @@ public class MallElasticConfig {
         RestClientBuilder builder = null;
 
         //final String hostname, final int port, final String scheme
-        builder = RestClient.builder(new HttpHost("81.69.248.172", 9200, "http"));
+        builder = RestClient.builder(new HttpHost("192.168.71.3", 9200, "http"));
         RestHighLevelClient client = new RestHighLevelClient(builder);
 //        RestHighLevelClient client = new RestHighLevelClient(
 //                RestClient.builder(
