@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
 
     <properties> 
+        <!--suppress UnresolvedMavenProperty -->
         <sonar.jacoco.reportPaths>${PWD}/./target/jacoco.exec</sonar.jacoco.reportPaths>
         <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
     </properties>
