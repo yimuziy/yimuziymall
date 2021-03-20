@@ -6,13 +6,13 @@ pipeline {
 
   }
    parameters {
-        string(name: 'PROJECT_VERSION',defaultValue: 'v0.0Beta', description:'')
-        string(name: 'PROJECT_NAME',defaultValue: '', description:'')
+        string(name: 'PROJECT_VERSION',defaultValue: 'v0.0Beta', description:'项目版本')
+        string(name: 'PROJECT_NAME',defaultValue: 'mall-auth-server', description:'构建模块')
     }
     
    environment {
         DOCKER_CREDENTIAL_ID = 'dockerhub-id'
-        GITHUB_CREDENTIAL_ID = 'gitee-id'
+        GITEE_CREDENTIAL_ID = 'gitee-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
         REGISTRY = 'docker.io'
         DOCKERHUB_NAMESPACE = 'yimuziy'
@@ -40,7 +40,7 @@ pipeline {
                     sh 'cd $PROJECT_NAME && docker build --no-cache -f Dockerfile -t $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
-                        sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:latest '
+                        sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:latest '
                         sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:latest '
                     }
                 }
@@ -49,7 +49,7 @@ pipeline {
         
      stage('部署到k8s') {
           when{
-            branch 'sonarqube'
+            branch 'master'
           }
           steps {
             input(id: "deploy-to-dev-$PROJECT_NAME", message: "是否将$PROJECT_NAME 部署到集群中？")
@@ -66,14 +66,15 @@ pipeline {
           steps {
             container ('maven') {
                 input(id: 'release-image-with-tag', message: '发布当前版本镜像吗?')
+                sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$PROJECT_VERSION '
+                sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$PROJECT_VERSION '
                   withCredentials([usernamePassword(credentialsId: "$GITEE_CREDENTIAL_ID", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                     sh 'git config --global user.email "yimuziy@163.com" '
                     sh 'git config --global user.name "yimuziy" '
                     sh 'git tag -a $PROJECT_VERSION -m "$PROJECT_VERSION" '
                     sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@gitee.com/$GITEE_ACCOUNT/yimuziymall.git --tags --ipv4'
                   }
-                sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$PROJECT_VERSION '
-                sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$PROJECT_VERSION '
+                
             }
           }
       }
