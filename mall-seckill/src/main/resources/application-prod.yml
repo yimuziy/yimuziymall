@@ -1,11 +1,11 @@
 spring:
   application:
     name: mall-seckill
-  cloud:
-
-    sentinel:
-      transport:
-        port: 8719
+#  cloud:
+#
+#    sentinel:
+#      transport:
+#        port: 8719
 
 
 

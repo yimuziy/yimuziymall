@@ -2,4 +2,4 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: nacos:8848
+        server-addr: nacos-service.yimuziymall:8848

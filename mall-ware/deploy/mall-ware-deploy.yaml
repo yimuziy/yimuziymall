@@ -17,14 +17,14 @@ spec:
     spec:
       containers:
         - name: mall-ware
-          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$PROJECT_VERSION
+          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:latest
           ports:
             - containerPort: 8080
               protocol: TCP
           resources:
             limits:
               cpu: 310m
-              memory: 200Mi
+              memory: 400Mi
             requests:
               cpu: 10m
               memory: 10Mi
@@ -57,7 +57,7 @@ spec:
       protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 20011
+      nodePort: 31011
   selector:
     app: mall-ware
   type: NodePort
